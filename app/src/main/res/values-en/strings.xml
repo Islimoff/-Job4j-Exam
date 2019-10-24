@@ -20,10 +20,6 @@
     <string name="pressure">Atmospheric pressure</string>
     <string name="report_number">Report number</string>
 
-
-
-
-
     <string-array name="domain_arrays">
         <item>Selected region</item>
         <item>Moscow region</item>

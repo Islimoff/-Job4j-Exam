@@ -237,23 +237,32 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button1"
+                android:id="@+id/button3"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/button_background"
+                android:background="@drawable/button_custom"
+                android:shadowColor="#A8A8A8"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="5"
                 android:text="@string/button_previous"
-                android:textColor="#573139"
+                android:textColor="#B5BAFF"
                 android:textSize="20sp" />
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/button4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/button_background"
+                android:background="@drawable/button_custom"
+                android:shadowColor="#A8A8A8"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="5"
                 android:text="@string/button_next"
-                android:textColor="#573139"
+                android:textColor="#B5BAFF"
                 android:textSize="20sp" />
         </LinearLayout>
     </LinearLayout>
