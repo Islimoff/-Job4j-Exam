@@ -1,7 +1,24 @@
 <resources>
     <string name="app_name">Job4j Exam</string>
     <string name="domain_prompt">Выберите область</string>
+    <string name="hello">Hello, Petr Arsentev</string>
     <string name="exp_date">Дата проведения испытания</string>
+    <string name="RadioButton">RadioButton</string>
+    <string name="RadioButton1">RadioButton</string>
+    <string name="RadioButton2">RadioButton</string>
+    <string name="RadioButton3">RadioButton</string>
+    <string name="button_previous">Назад</string>
+    <string name="button_next">Вперед</string>
+    <string name="city">Город</string>
+    <string name="date">Дата</string>
+    <string name="obj_name">Имя объекта</string>
+    <string name="address">Улица и дом</string>
+    <string name="full_name">Ф.И.О.</string>
+    <string name="temperature">Температура воздуха</string>
+    <string name="humidity">Влажность воздуха</string>
+    <string name="pressure">Атмосферное давление</string>
+    <string name="report_number">Номер отчета</string>
+
     <string-array name="domain_arrays">
         <item>Выберите область</item>
         <item>Московская</item>

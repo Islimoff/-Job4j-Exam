@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Job4j Exam</string>
+    <string name="domain_prompt">Selected region</string>
+    <string name="hello">Hello, Petr Arsentev</string>
+    <string name="exp_date">Date of test</string>
+    <string name="RadioButton">RadioButton</string>
+    <string name="RadioButton1">RadioButton</string>
+    <string name="RadioButton2">RadioButton</string>
+    <string name="RadioButton3">RadioButton</string>
+    <string name="button_previous">Previous</string>
+    <string name="button_next">Next</string>
+    <string name="city">City</string>
+    <string name="date">Date</string>
+    <string name="obj_name">Object name</string>
+    <string name="address">Street and house</string>
+    <string name="full_name">Full name</string>
+    <string name="temperature">Air temperature</string>
+    <string name="humidity">Air humidity</string>
+    <string name="pressure">Atmospheric pressure</string>
+    <string name="report_number">Report number</string>
+
+
+
+
+
+    <string-array name="domain_arrays">
+        <item>Selected region</item>
+        <item>Moscow region</item>
+        <item>Saint Petersburg region</item>
+    </string-array>
+    <string-array name="exp_array">
+        <item>Selected date</item>
+        <item>23.10.2019</item>
+        <item>24.10.2019</item>
+        <item>25.10.2019</item>
+    </string-array>
+</resources>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/scroll"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -21,7 +20,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:width="350dp"
-                android:text="Город" />
+                android:text="@string/city" />
 
             <Spinner
                 android:id="@+id/spinner"
@@ -32,6 +31,7 @@
                 android:prompt="@string/domain_prompt"
                 android:spinnerMode="dialog" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:width="350dp"
-                android:text="Дата" />
+                android:text="@string/date" />
 
             <Spinner
                 android:id="@+id/spinner1"
@@ -66,7 +66,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:width="100dp"
-                android:text="Имя объекта"
+                android:text="@string/obj_name"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
             <EditText
@@ -78,7 +78,7 @@
                 android:inputType="textPersonName"
                 android:selectAllOnFocus="true"
                 android:singleLine="true"
-                android:text="Имя объекта" />
+                android:text="@string/obj_name" />
         </LinearLayout>
 
         <LinearLayout
@@ -92,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:width="100dp"
-                android:text="Улица и дом" />
+                android:text="@string/address" />
 
             <EditText
                 android:id="@+id/editText4"
@@ -103,7 +103,7 @@
                 android:inputType="textPersonName"
                 android:selectAllOnFocus="true"
                 android:singleLine="true"
-                android:text="Улица и дом" />
+                android:text="@string/address" />
         </LinearLayout>
 
         <LinearLayout
@@ -117,7 +117,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:width="100dp"
-                android:text="ФИО заказчика" />
+                android:text="@string/full_name" />
 
             <EditText
                 android:id="@+id/editText5"
@@ -128,7 +128,7 @@
                 android:inputType="textPersonName"
                 android:selectAllOnFocus="true"
                 android:singleLine="true"
-                android:text="ФИО заказчика" />
+                android:text="@string/full_name" />
         </LinearLayout>
 
         <LinearLayout
@@ -142,7 +142,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:width="100dp"
-                android:text="Температура воздуха" />
+                android:text="@string/temperature" />
 
             <EditText
                 android:id="@+id/editText6"
@@ -153,7 +153,7 @@
                 android:inputType="textPersonName"
                 android:selectAllOnFocus="true"
                 android:singleLine="true"
-                android:text="Температура воздуха" />
+                android:text="@string/temperature" />
         </LinearLayout>
 
         <LinearLayout
@@ -167,7 +167,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:width="100dp"
-                android:text="Влажность воздуха" />
+                android:text="@string/humidity" />
 
             <EditText
                 android:id="@+id/editText7"
@@ -178,7 +178,7 @@
                 android:inputType="textPersonName"
                 android:selectAllOnFocus="true"
                 android:singleLine="true"
-                android:text="Влажность воздуха" />
+                android:text="@string/humidity" />
         </LinearLayout>
 
         <LinearLayout
@@ -192,7 +192,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:width="100dp"
-                android:text="Атмосферное давление" />
+                android:text="@string/pressure" />
 
             <EditText
                 android:id="@+id/editText8"
@@ -203,7 +203,7 @@
                 android:inputType="textPersonName"
                 android:selectAllOnFocus="true"
                 android:singleLine="true"
-                android:text="Атмосферное давление" />
+                android:text="@string/pressure" />
         </LinearLayout>
 
         <LinearLayout
@@ -217,7 +217,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:width="100dp"
-                android:text="Номер отчета" />
+                android:text="@string/report_number" />
 
             <EditText
                 android:id="@+id/editText9"
@@ -228,7 +228,33 @@
                 android:inputType="textPersonName"
                 android:selectAllOnFocus="true"
                 android:singleLine="true"
-                android:text="Номер отчета" />
+                android:text="@string/report_number" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/button_background"
+                android:text="@string/button_previous"
+                android:textColor="#573139"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/button_background"
+                android:text="@string/button_next"
+                android:textColor="#573139"
+                android:textSize="20sp" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>
