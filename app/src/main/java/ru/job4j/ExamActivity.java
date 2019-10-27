@@ -21,30 +21,7 @@ public class ExamActivity extends AppCompatActivity {
     private static final String TAG = "ExamActivity";
     private int currentBillTotal;
     private int position = 0;
-
-    private final List<Question> questions = Arrays.asList(
-            new Question(
-                    1, "How many primitive variables does Java have?",
-                    Arrays.asList(
-                            new Option(1, "1.1"), new Option(2, "1.2"),
-                            new Option(3, "1.3"), new Option(4, "1.4")
-                    ), 4
-            ),
-            new Question(
-                    2, "What is Java Virtual Machine?",
-                    Arrays.asList(
-                            new Option(1, "2.1"), new Option(2, "2.2"),
-                            new Option(3, "2.3"), new Option(4, "2.4")
-                    ), 4
-            ),
-            new Question(
-                    3, "What is happen if we try unboxing null?",
-                    Arrays.asList(
-                            new Option(1, "3.1"), new Option(2, "3.2"),
-                            new Option(3, "3.3"), new Option(4, "3.4")
-                    ), 4
-            )
-    );
+    private final List<Question> questions = questionsGenerator();
     private int answers[] = new int[questions.size()];
 
     @Override
@@ -61,40 +38,10 @@ public class ExamActivity extends AppCompatActivity {
         setContentView(R.layout.activity_exam);
         fillForm();
         Button next = findViewById(R.id.next);
-        next.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        RadioGroup variants = findViewById(R.id.variants);
-                        if (variants.getCheckedRadioButtonId() != -1) {
-                            answers[position] = variants.getCheckedRadioButtonId();
-                            showAnswer();
-                            position++;
-                            fillForm();
-                        } else {
-                            showWarning();
-                        }
-                    }
-                }
-        );
+        next.setOnClickListener(this::nextBtn);
 
         Button previous = findViewById(R.id.previous);
-        previous.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        RadioGroup variants = findViewById(R.id.variants);
-                        if (variants.getCheckedRadioButtonId() != -1) {
-                            answers[position] = variants.getCheckedRadioButtonId();
-                            showAnswer();
-                            position--;
-                            fillForm();
-                        } else {
-                            showWarning();
-                        }
-                    }
-                }
-        );
+        previous.setOnClickListener(this::previousBtn);
         Log.d(TAG, "onCreate");
     }
 
@@ -170,5 +117,48 @@ public class ExamActivity extends AppCompatActivity {
                 this, "Select one of the options",
                 Toast.LENGTH_SHORT
         ).show();
+    }
+
+    private void nextBtn(View view) {
+        RadioGroup variants = findViewById(R.id.variants);
+        if (variants.getCheckedRadioButtonId() != -1) {
+            answers[position] = variants.getCheckedRadioButtonId();
+            showAnswer();
+            position++;
+            fillForm();
+        } else {
+            showWarning();
+        }
+    }
+
+    public void previousBtn(View view) {
+        RadioGroup variants = findViewById(R.id.variants);
+        if (variants.getCheckedRadioButtonId() != -1) {
+            answers[position] = variants.getCheckedRadioButtonId();
+            showAnswer();
+            position--;
+            fillForm();
+        } else {
+            showWarning();
+        }
+    }
+
+    public List<Question> questionsGenerator() {
+        List<Question> questions = new ArrayList<>();
+        String questionText[] = {"How many primitive variables does Java have?", "What is Java Virtual Machine?", "What is happen if we try unboxing null?"};
+        for (int i = 1; i < 4; i++) {
+            Question question = new Question(i, questionText[i - 1], optionsGenerator(i), 4);
+            questions.add(question);
+        }
+        return questions;
+    }
+
+    public List<Option> optionsGenerator(int id) {
+        List<Option> options = new ArrayList<>();
+        for (int i = 1; i < 5; i++) {
+            Option option = new Option(i, id + "." + i);
+            options.add(option);
+        }
+        return options;
     }
 }

@@ -8,7 +8,6 @@ public class Question {
     private String text;
     private List<Option> options;
     private int answer;
-    private  int currentAnswer;
 
     public Question(int id, String text, List<Option> options, int answer) {
         this.id = id;
@@ -31,13 +30,5 @@ public class Question {
 
     public int getAnswer() {
         return answer;
-    }
-
-    public void setCurrentAnswer(int currentAnswer) {
-        this.currentAnswer = currentAnswer;
-    }
-
-    public int getCurrentAnswer() {
-        return currentAnswer;
     }
 }
