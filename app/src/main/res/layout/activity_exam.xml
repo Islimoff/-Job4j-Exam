@@ -7,12 +7,14 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/question"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/hello"
         style="@style/CustomText"/>
 
     <RadioGroup
+        android:id="@+id/variants"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -49,14 +51,14 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/previous"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/button_previous" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
