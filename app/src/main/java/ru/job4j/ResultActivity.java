@@ -11,14 +11,12 @@ public class ResultActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle state) {
         super.onCreate(state);
-        TextView textView = new TextView(this);
+        setContentView(R.layout.result_activity);
         Bundle arguments = getIntent().getExtras();
+        final TextView text=findViewById(R.id.answers);
+        int correctAnswers=arguments.getInt("correctAnswers");
+        int wrongAnswers=arguments.getInt("wrongAnswers");
+        text.setText("Correct Answers: "+correctAnswers+"\nWrong Answers: "+wrongAnswers);
 
-        if (arguments != null) {
-            String correctAnswers = arguments.get("name").toString();
-            String wrongAnswers = arguments.getString("company");
-            textView.setText("correctAnswers: " + correctAnswers + "\nwrongAnswers: " + wrongAnswers);
-        }
-        setContentView(textView);
     }
 }

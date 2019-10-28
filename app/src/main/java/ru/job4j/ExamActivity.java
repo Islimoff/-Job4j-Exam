@@ -128,10 +128,11 @@ public class ExamActivity extends AppCompatActivity {
             correctAnswers++;
             wrongAnswers--;
         }
-        if (position == questions.size()){
+        if (position == questions.size()-1){
             Intent intent = new Intent(this, ResultActivity.class);
             intent.putExtra("correctAnswers", correctAnswers);
             intent.putExtra("wrongAnswers", wrongAnswers);
+            startActivity(intent);
         }else {
             if (variants.getCheckedRadioButtonId() != -1) {
                 answers[position] = variants.getCheckedRadioButtonId();
@@ -162,6 +163,10 @@ public class ExamActivity extends AppCompatActivity {
             answers[position] = variants.getCheckedRadioButtonId();
             showAnswer();
             position--;
+            if (position==0){
+                correctAnswers=0;
+                wrongAnswers=3;
+            }
             fillForm();
         } else {
             showWarning();
