@@ -2,6 +2,7 @@ package ru.job4j;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,9 +12,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ExamActivity extends AppCompatActivity {
@@ -21,8 +20,12 @@ public class ExamActivity extends AppCompatActivity {
     private static final String TAG = "ExamActivity";
     private int currentBillTotal;
     private int position = 0;
+    public static final String HINT_FOR = "hint_for";
+    public static final String QUESTION = "question";
     private final List<Question> questions = questionsGenerator();
     private int answers[] = new int[questions.size()];
+    int correctAnswers;
+    int wrongAnswers=questions.size();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +42,8 @@ public class ExamActivity extends AppCompatActivity {
         fillForm();
         Button next = findViewById(R.id.next);
         next.setOnClickListener(this::nextBtn);
-
+        Button hint = findViewById(R.id.hint);
+        hint.setOnClickListener(this::hintButton);
         Button previous = findViewById(R.id.previous);
         previous.setOnClickListener(this::previousBtn);
         Log.d(TAG, "onCreate");
@@ -87,7 +91,6 @@ public class ExamActivity extends AppCompatActivity {
     private void fillForm() {
         RadioGroup variants = findViewById(R.id.variants);
         findViewById(R.id.previous).setEnabled(position != 0);
-        findViewById(R.id.next).setEnabled(position != questions.size() - 1);
         final TextView text = findViewById(R.id.question);
         Question question = this.questions.get(this.position);
         text.setText(question.getText());
@@ -121,18 +124,40 @@ public class ExamActivity extends AppCompatActivity {
 
     private void nextBtn(View view) {
         RadioGroup variants = findViewById(R.id.variants);
-        if (variants.getCheckedRadioButtonId() != -1) {
-            answers[position] = variants.getCheckedRadioButtonId();
-            showAnswer();
-            position++;
-            fillForm();
-        } else {
-            showWarning();
+        if (variants.getCheckedRadioButtonId()==questions.get(position).getAnswer()){
+            correctAnswers++;
+            wrongAnswers--;
         }
+        if (position == questions.size()){
+            Intent intent = new Intent(this, ResultActivity.class);
+            intent.putExtra("correctAnswers", correctAnswers);
+            intent.putExtra("wrongAnswers", wrongAnswers);
+        }else {
+            if (variants.getCheckedRadioButtonId() != -1) {
+                answers[position] = variants.getCheckedRadioButtonId();
+                showAnswer();
+                position++;
+                fillForm();
+            } else {
+                showWarning();
+            }
+        }
+    }
+
+    private  void hintButton(View view){
+        Intent intent = new Intent(this, HintActivity.class);
+        TextView text = findViewById(R.id.question);
+        intent.putExtra(HINT_FOR, position);
+        intent.putExtra(QUESTION,text.getText().toString());
+        startActivity(intent);
     }
 
     public void previousBtn(View view) {
         RadioGroup variants = findViewById(R.id.variants);
+        if (variants.getCheckedRadioButtonId()==questions.get(position).getAnswer()){
+            correctAnswers--;
+            wrongAnswers++;
+        }
         if (variants.getCheckedRadioButtonId() != -1) {
             answers[position] = variants.getCheckedRadioButtonId();
             showAnswer();

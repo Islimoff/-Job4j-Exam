@@ -18,6 +18,7 @@
     <string name="humidity">Влажность воздуха</string>
     <string name="pressure">Атмосферное давление</string>
     <string name="report_number">Номер отчета</string>
+    <string name="button_hint">Подсказка</string>
 
     <string-array name="domain_arrays">
         <item>Выберите область</item>
