@@ -25,7 +25,7 @@ public class ExamActivity extends AppCompatActivity {
     private final List<Question> questions = questionsGenerator();
     private int answers[] = new int[questions.size()];
     int correctAnswers;
-    int wrongAnswers=questions.size();
+    int wrongAnswers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,18 +124,15 @@ public class ExamActivity extends AppCompatActivity {
 
     private void nextBtn(View view) {
         RadioGroup variants = findViewById(R.id.variants);
-        if (variants.getCheckedRadioButtonId()==questions.get(position).getAnswer()){
-            correctAnswers++;
-            wrongAnswers--;
-        }
+        answers[position] = variants.getCheckedRadioButtonId();
         if (position == questions.size()-1){
+            calculateResults();
             Intent intent = new Intent(this, ResultActivity.class);
             intent.putExtra("correctAnswers", correctAnswers);
             intent.putExtra("wrongAnswers", wrongAnswers);
             startActivity(intent);
         }else {
             if (variants.getCheckedRadioButtonId() != -1) {
-                answers[position] = variants.getCheckedRadioButtonId();
                 showAnswer();
                 position++;
                 fillForm();
@@ -155,18 +152,10 @@ public class ExamActivity extends AppCompatActivity {
 
     public void previousBtn(View view) {
         RadioGroup variants = findViewById(R.id.variants);
-        if (variants.getCheckedRadioButtonId()==questions.get(position).getAnswer()){
-            correctAnswers--;
-            wrongAnswers++;
-        }
         if (variants.getCheckedRadioButtonId() != -1) {
             answers[position] = variants.getCheckedRadioButtonId();
             showAnswer();
             position--;
-            if (position==0){
-                correctAnswers=0;
-                wrongAnswers=3;
-            }
             fillForm();
         } else {
             showWarning();
@@ -190,5 +179,16 @@ public class ExamActivity extends AppCompatActivity {
             options.add(option);
         }
         return options;
+    }
+
+    private void calculateResults(){
+        correctAnswers=0;
+        wrongAnswers=questions.size();
+        for (int i=0; i<questions.size();i++){
+            if (answers[i]==questions.get(i).getAnswer()) {
+                correctAnswers++;
+                wrongAnswers--;
+            }
+        }
     }
 }
