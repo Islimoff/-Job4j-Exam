@@ -92,7 +92,7 @@ public class ExamActivity extends AppCompatActivity {
         RadioGroup variants = findViewById(R.id.variants);
         findViewById(R.id.previous).setEnabled(position != 0);
         final TextView text = findViewById(R.id.question);
-        Question question = this.questions.get(this.position);
+        Question question = questions.get(position);
         text.setText(question.getText());
         for (int index = 0; index != variants.getChildCount(); index++) {
             RadioButton button = (RadioButton) variants.getChildAt(index);

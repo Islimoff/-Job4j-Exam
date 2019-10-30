@@ -1,7 +1,6 @@
 package ru.job4j;
 
 public class Option {
-
     private int id;
     private String text;
 
