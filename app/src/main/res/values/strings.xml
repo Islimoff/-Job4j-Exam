@@ -19,6 +19,9 @@
     <string name="pressure">Атмосферное давление</string>
     <string name="report_number">Номер отчета</string>
     <string name="button_hint">Подсказка</string>
+    <string name="message_text">Текст сообщения</string>
+    <string name="save_button">Сохранить</string>
+
 
     <string-array name="domain_arrays">
         <item>Выберите область</item>

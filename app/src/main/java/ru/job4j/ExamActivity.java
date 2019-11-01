@@ -22,8 +22,6 @@ public class ExamActivity extends AppCompatActivity {
     private int position = 0;
     public static final String HINT_FOR = "hint_for";
     public static final String QUESTION = "question";
-    private final List<Question> questions = questionsGenerator();
-    private int answers[] = new int[questions.size()];
     int correctAnswers;
     int wrongAnswers;
 
@@ -32,7 +30,6 @@ public class ExamActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             currentBillTotal = 0;
         } else {
-            answers = savedInstanceState.getIntArray("ANSWERS_ARRAY");
             position = savedInstanceState.getInt("POSITION");
             currentBillTotal = savedInstanceState.getInt("BILL_TOTAL");
             currentBillTotal++;
@@ -71,7 +68,6 @@ public class ExamActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt("BILL_TOTAL", currentBillTotal);
-        outState.putIntArray("ANSWERS_ARRAY", answers);
         outState.putInt("POSITION", position);
         Log.d(TAG, "current bill is " + currentBillTotal);
     }
@@ -92,14 +88,14 @@ public class ExamActivity extends AppCompatActivity {
         RadioGroup variants = findViewById(R.id.variants);
         findViewById(R.id.previous).setEnabled(position != 0);
         final TextView text = findViewById(R.id.question);
-        Question question = questions.get(position);
+        Question question = Store.getStore().getQuestion(position);
         text.setText(question.getText());
         for (int index = 0; index != variants.getChildCount(); index++) {
             RadioButton button = (RadioButton) variants.getChildAt(index);
             Option option = question.getOptions().get(index);
             button.setId(option.getId());
             button.setText(option.getText());
-            if (option.getId() == answers[position]) {
+            if (option.getId() == Store.getStore().getAnswer(position)) {
                 button.setChecked(true);
             }
         }
@@ -108,7 +104,7 @@ public class ExamActivity extends AppCompatActivity {
     private void showAnswer() {
         RadioGroup variants = findViewById(R.id.variants);
         int id = variants.getCheckedRadioButtonId();
-        Question question = this.questions.get(this.position);
+        Question question = Store.getStore().getQuestion(position);
         Toast.makeText(
                 this, "Your answer is " + id + ", correct is " + question.getAnswer(),
                 Toast.LENGTH_SHORT
@@ -124,14 +120,14 @@ public class ExamActivity extends AppCompatActivity {
 
     private void nextBtn(View view) {
         RadioGroup variants = findViewById(R.id.variants);
-        answers[position] = variants.getCheckedRadioButtonId();
-        if (position == questions.size()-1){
+        Store.getStore().setAnswer(position, variants.getCheckedRadioButtonId());
+        if (position == Store.getStore().getQuestions().size() - 1) {
             calculateResults();
             Intent intent = new Intent(this, ResultActivity.class);
             intent.putExtra("correctAnswers", correctAnswers);
             intent.putExtra("wrongAnswers", wrongAnswers);
             startActivity(intent);
-        }else {
+        } else {
             if (variants.getCheckedRadioButtonId() != -1) {
                 showAnswer();
                 position++;
@@ -142,18 +138,18 @@ public class ExamActivity extends AppCompatActivity {
         }
     }
 
-    private  void hintButton(View view){
+    private void hintButton(View view) {
         Intent intent = new Intent(this, HintActivity.class);
         TextView text = findViewById(R.id.question);
         intent.putExtra(HINT_FOR, position);
-        intent.putExtra(QUESTION,text.getText().toString());
+        intent.putExtra(QUESTION, text.getText().toString());
         startActivity(intent);
     }
 
     public void previousBtn(View view) {
         RadioGroup variants = findViewById(R.id.variants);
         if (variants.getCheckedRadioButtonId() != -1) {
-            answers[position] = variants.getCheckedRadioButtonId();
+            Store.getStore().setAnswer(position, variants.getCheckedRadioButtonId());
             showAnswer();
             position--;
             fillForm();
@@ -162,30 +158,11 @@ public class ExamActivity extends AppCompatActivity {
         }
     }
 
-    public List<Question> questionsGenerator() {
-        List<Question> questions = new ArrayList<>();
-        String questionText[] = {"How many primitive variables does Java have?", "What is Java Virtual Machine?", "What is happen if we try unboxing null?"};
-        for (int i = 1; i < 4; i++) {
-            Question question = new Question(i, questionText[i - 1], optionsGenerator(i), 4);
-            questions.add(question);
-        }
-        return questions;
-    }
-
-    public List<Option> optionsGenerator(int id) {
-        List<Option> options = new ArrayList<>();
-        for (int i = 1; i < 5; i++) {
-            Option option = new Option(i, id + "." + i);
-            options.add(option);
-        }
-        return options;
-    }
-
-    private void calculateResults(){
-        correctAnswers=0;
-        wrongAnswers=questions.size();
-        for (int i=0; i<questions.size();i++){
-            if (answers[i]==questions.get(i).getAnswer()) {
+    private void calculateResults() {
+        correctAnswers = 0;
+        wrongAnswers = Store.getStore().getQuestions().size();
+        for (int i = 0; i < Store.getStore().getQuestions().size(); i++) {
+            if (Store.getStore().getAnswer(i) == Store.getStore().getQuestion(i).getAnswer()) {
                 correctAnswers++;
                 wrongAnswers--;
             }
