@@ -26,17 +26,20 @@ public class HintFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-       View view = inflater.inflate(R.layout.hint_activity, container, false);
-//        final TextView question = view.findViewById(R.id.question);
-//        final TextView answer = view.findViewById(R.id.hint);
-//        int page = getActivity().getIntent().getIntExtra(ExamActivity.HINT_FOR, 0);
-//        String questionText = getActivity().getIntent().getStringExtra(ExamActivity.QUESTION);
-//        question.setText(questionText);
-//        answer.setText(this.answers.get(page));
-//        Button back = view.findViewById(R.id.back);
-//        back.setOnClickListener(this::backBtn);
-       return view;
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle saveInstanceState) {
+        View view = inflater.inflate(R.layout.hint_activity, container, false);
+        final TextView question = view.findViewById(R.id.question);
+        final TextView answer = view.findViewById(R.id.hint);
+        int page = getActivity().getIntent().getIntExtra(ExamActivity.HINT_FOR, 0);
+        String questionText = getActivity().getIntent().getStringExtra(ExamActivity.QUESTION);
+        question.setText(questionText);
+        answer.setText(this.answers.get(page));
+        Button back = view.findViewById(R.id.back);
+        back.setOnClickListener(this::backBtn);
+        return view;
     }
 
+    private void backBtn(View view) {
+        getActivity().onBackPressed();
+    }
 }
