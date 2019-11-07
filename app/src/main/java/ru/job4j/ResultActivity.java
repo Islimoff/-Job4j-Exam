@@ -6,6 +6,7 @@ public class ResultActivity extends BaseActivity {
 
     @Override
     public Fragment loadFragment() {
-        return new ResultFragment();
+        return ResultFragment.of(getIntent().getIntExtra(ExamActivity.CORRECTANSWERS, 0)
+                , getIntent().getIntExtra(ExamActivity.WRONGANSWERS, 0));
     }
 }

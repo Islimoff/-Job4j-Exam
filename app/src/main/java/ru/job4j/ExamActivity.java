@@ -22,6 +22,8 @@ public class ExamActivity extends AppCompatActivity {
     private int position = 0;
     public static final String HINT_FOR = "hint_for";
     public static final String QUESTION = "question";
+    public static final String CORRECTANSWERS = "correctAnswers";
+    public static final String WRONGANSWERS = "wrongAnswers";
     int correctAnswers;
     int wrongAnswers;
 
@@ -124,8 +126,8 @@ public class ExamActivity extends AppCompatActivity {
         if (position == Store.getStore().getQuestions().size() - 1) {
             calculateResults();
             Intent intent = new Intent(this, ResultActivity.class);
-            intent.putExtra("correctAnswers", correctAnswers);
-            intent.putExtra("wrongAnswers", wrongAnswers);
+            intent.putExtra(CORRECTANSWERS, correctAnswers);
+            intent.putExtra(WRONGANSWERS, wrongAnswers);
             startActivity(intent);
         } else {
             if (variants.getCheckedRadioButtonId() != -1) {

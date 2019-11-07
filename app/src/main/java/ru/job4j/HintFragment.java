@@ -30,8 +30,8 @@ public class HintFragment extends Fragment {
         View view = inflater.inflate(R.layout.hint_activity, container, false);
         final TextView question = view.findViewById(R.id.question);
         final TextView answer = view.findViewById(R.id.hint);
-        int page = getActivity().getIntent().getIntExtra(ExamActivity.HINT_FOR, 0);
-        String questionText = getActivity().getIntent().getStringExtra(ExamActivity.QUESTION);
+        int page = getArguments().getInt(ExamActivity.HINT_FOR, 0);
+        String questionText = getArguments().getString(ExamActivity.QUESTION);
         question.setText(questionText);
         answer.setText(this.answers.get(page));
         Button back = view.findViewById(R.id.back);
@@ -41,5 +41,14 @@ public class HintFragment extends Fragment {
 
     private void backBtn(View view) {
         getActivity().onBackPressed();
+    }
+
+    public static HintFragment of(int index, String text) {
+        HintFragment hint = new HintFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt(ExamActivity.HINT_FOR, index);
+        bundle.putString(ExamActivity.QUESTION, text);
+        hint.setArguments(bundle);
+        return hint;
     }
 }
