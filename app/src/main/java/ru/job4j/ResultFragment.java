@@ -17,8 +17,9 @@ public class ResultFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle saveInstanceState) {
         View view = inflater.inflate(R.layout.result_activity, container, false);
         final TextView text = view.findViewById(R.id.answers);
-        int correctAnswers = getArguments().getInt(ExamActivity.CORRECTANSWERS, 0);
-        int wrongAnswers = getArguments().getInt(ExamActivity.WRONGANSWERS, 0);
+        Bundle arguments = getArguments();
+        int correctAnswers = arguments.getInt(ExamActivity.CORRECTANSWERS, 0);
+        int wrongAnswers = arguments.getInt(ExamActivity.WRONGANSWERS, 0);
         text.setText("Correct Answers: " + correctAnswers + "\nWrong Answers: " + wrongAnswers);
         return view;
     }
