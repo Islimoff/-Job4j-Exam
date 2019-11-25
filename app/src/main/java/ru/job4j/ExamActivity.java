@@ -45,6 +45,8 @@ public class ExamActivity extends AppCompatActivity {
         hint.setOnClickListener(this::hintButton);
         Button previous = findViewById(R.id.previous);
         previous.setOnClickListener(this::previousBtn);
+        Button back = findViewById(R.id.back_to_list);
+        back.setOnClickListener(this::backBtn);
         Log.d(TAG, "onCreate");
     }
 
@@ -169,5 +171,9 @@ public class ExamActivity extends AppCompatActivity {
                 wrongAnswers--;
             }
         }
+    }
+
+    private void backBtn(View view) {
+        onBackPressed();
     }
 }
