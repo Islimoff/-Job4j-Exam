@@ -1,6 +1,7 @@
 package ru.job4j;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,7 +16,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExamActivity extends AppCompatActivity {
+public class ExamActivity extends AppCompatActivity implements ConfirmHintDialogFragment.ConfirmHintDialogListener {
 
     private static final String TAG = "ExamActivity";
     private int currentBillTotal;
@@ -143,11 +144,8 @@ public class ExamActivity extends AppCompatActivity {
     }
 
     private void hintButton(View view) {
-        Intent intent = new Intent(this, HintActivity.class);
-        TextView text = findViewById(R.id.question);
-        intent.putExtra(HINT_FOR, position);
-        intent.putExtra(QUESTION, text.getText().toString());
-        startActivity(intent);
+        DialogFragment dialog = new ConfirmHintDialogFragment();
+        dialog.show(getSupportFragmentManager(), "dialog_tag");
     }
 
     public void previousBtn(View view) {
@@ -175,5 +173,19 @@ public class ExamActivity extends AppCompatActivity {
 
     private void backBtn(View view) {
         onBackPressed();
+    }
+
+    @Override
+    public void onPositiveDialogClick(DialogFragment dialog) {
+        Intent intent = new Intent(this, HintActivity.class);
+        TextView text = findViewById(R.id.question);
+        intent.putExtra(HINT_FOR, position);
+        intent.putExtra(QUESTION, text.getText().toString());
+        startActivity(intent);
+    }
+
+    @Override
+    public void onNegativeDialogClick(DialogFragment dialog) {
+        Toast.makeText(this, "Молодец!!!", Toast.LENGTH_SHORT).show();
     }
 }
