@@ -21,6 +21,7 @@
     <string name="button_hint">Подсказка</string>
     <string name="message_text">Текст сообщения</string>
     <string name="save_button">Сохранить</string>
+    <string name="date_picker_title">Дата</string>
 
 
     <string-array name="domain_arrays">

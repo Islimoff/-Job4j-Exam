@@ -22,6 +22,7 @@
     <string name="button_hint">Hint</string>
     <string name="message_text">Message text</string>
     <string name="save_button">Save</string>
+    <string name="date_picker_title">Date</string>
     <string-array name="domain_arrays">
         <item>Selected region</item>
         <item>Moscow region</item>
