@@ -1,58 +1,45 @@
 package ru.job4j;
 
-import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.Dialog;
-import android.content.DialogInterface;
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.DatePicker;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.util.Calendar;
 
+public class DatePickerFragment extends DialogFragment implements OnDateSetListener{
 
-public class DatePickerFragment extends DialogFragment {
+    DatePickerListener datePickerListener;
 
-    private DatePicker datePicker;
+    @Override
+    public void onAttach(Context context) {
+        try {
+            super.onAttach(context);
+            datePickerListener = (DatePickerListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(String.format("%s must implement DatePickerListener", context.toString()));
+        }
+    }
 
-    public static final String EXTRA_DATE = "date";
+    public interface DatePickerListener {
+        void onDateSet(DatePicker view, int year, int hourOfDay, int minute);
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        View view = LayoutInflater.from(getActivity())
-                .inflate(R.layout.dialog_date, null);
-        return new AlertDialog.Builder(getActivity())
-                .setView(view)
-                .setTitle(R.string.date_picker_title)
-                .setPositiveButton(android.R.string.ok,
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                datePicker = (DatePicker) view;
-                                int year = datePicker.getYear();
-                                int month = datePicker.getMonth();
-                                int day = datePicker.getDayOfMonth();
-                                Date date = new GregorianCalendar(year, month, day).
-                                        getTime();
-                                sendResult(Activity.RESULT_OK, date);
-                            }
-                        })
-                .create();
+        final Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+
+        return new DatePickerDialog(getActivity(), this, year, month, day);
     }
 
-    private void sendResult(int resultCode, Date date) {
-        if (getTargetFragment() == null) {
-            return;
-        }
-        Intent intent = new Intent();
-        intent.putExtra(EXTRA_DATE, date);
-        getTargetFragment()
-                .onActivityResult(getTargetRequestCode(), resultCode, intent);
+    public void onDateSet(DatePicker view, int year, int month, int day) {
+        datePickerListener.onDateSet(view, year, month, day);
     }
 }
-
