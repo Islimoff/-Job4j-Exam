@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DateTimeActivity">
+        <activity android:name=".ExamsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,7 +22,7 @@
         </activity>
         <activity android:name=".ExamActivity">
         </activity>
-        <activity android:name=".ExamsActivity" />
+        <activity android:name=".DateTimeActivity" />
     </application>
 
 </manifest>

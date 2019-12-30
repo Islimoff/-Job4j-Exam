@@ -22,6 +22,8 @@
     <string name="message_text">Текст сообщения</string>
     <string name="save_button">Сохранить</string>
     <string name="date_picker_title">Дата</string>
+    <string name="add_item">Сохранить</string>
+    <string name="delete_item">Дата</string>
 
 
     <string-array name="domain_arrays">

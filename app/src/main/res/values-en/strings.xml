@@ -23,6 +23,8 @@
     <string name="message_text">Message text</string>
     <string name="save_button">Save</string>
     <string name="date_picker_title">Date</string>
+    <string name="add_item">Add</string>
+    <string name="delete_item">Delete</string>
     <string-array name="domain_arrays">
         <item>Selected region</item>
         <item>Moscow region</item>
