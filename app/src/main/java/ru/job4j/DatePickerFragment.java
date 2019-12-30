@@ -11,23 +11,7 @@ import androidx.fragment.app.DialogFragment;
 
 import java.util.Calendar;
 
-public class DatePickerFragment extends DialogFragment implements OnDateSetListener{
-
-    DatePickerListener datePickerListener;
-
-    @Override
-    public void onAttach(Context context) {
-        try {
-            super.onAttach(context);
-            datePickerListener = (DatePickerListener) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(String.format("%s must implement DatePickerListener", context.toString()));
-        }
-    }
-
-    public interface DatePickerListener {
-        void onDateSet(DatePicker view, int year, int hourOfDay, int minute);
-    }
+public class DatePickerFragment extends DialogFragment{
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -36,10 +20,6 @@ public class DatePickerFragment extends DialogFragment implements OnDateSetListe
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DAY_OF_MONTH);
 
-        return new DatePickerDialog(getActivity(), this, year, month, day);
-    }
-
-    public void onDateSet(DatePicker view, int year, int month, int day) {
-        datePickerListener.onDateSet(view, year, month, day);
+        return new DatePickerDialog(getActivity(), (OnDateSetListener)getActivity(), year, month, day);
     }
 }
