@@ -4,20 +4,21 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExamsActivity extends AppCompatActivity {
+public class ExamsActivity extends AppCompatActivity implements ConfirmDeleteExamsListFragment.ConfirmDeleteExamsListener {
 
     private RecyclerView recycler;
+    private List<Exam> exams;
 
     @Override
     protected void onCreate(@Nullable Bundle state) {
@@ -25,6 +26,10 @@ public class ExamsActivity extends AppCompatActivity {
         setContentView(R.layout.exams);
         recycler = findViewById(R.id.exams);
         recycler.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        exams = new ArrayList<>();
+        for (int index = 0; index != 100; index++) {
+            exams.add(new Exam(index, String.format("Exam %s", index), System.currentTimeMillis(), 0));
+        }
         updateUI();
     }
 
@@ -39,20 +44,29 @@ public class ExamsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.add_item:
-                Toast.makeText(ExamsActivity.this,"ADD",Toast.LENGTH_SHORT).show();
+                exams.add(new Exam(exams.size(), String.format("Exam %s", exams.size()), System.currentTimeMillis(), 0));
+                updateUI();
                 return true;
             case R.id.delete_item:
-                Toast.makeText(ExamsActivity.this,"DELETE",Toast.LENGTH_SHORT).show();
+                DialogFragment dialog = new ConfirmDeleteExamsListFragment();
+                dialog.show(getSupportFragmentManager(), "dialog_tag");
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void updateUI() {
-        List<Exam> exams = new ArrayList<>();
-        for (int index = 0; index != 100; index++) {
-            exams.add(new Exam(index, String.format("Exam %s", index), System.currentTimeMillis(), 0));
-        }
         recycler.setAdapter(new ExamAdapter(exams,this));
+    }
+
+    @Override
+    public void onPositiveDialogClick(DialogFragment dialog) {
+        exams.clear();
+        updateUI();
+    }
+
+    @Override
+    public void onNegativeDialogClick(DialogFragment dialog) {
+        return;
     }
 }
