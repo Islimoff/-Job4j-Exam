@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment;
 import java.util.HashMap;
 import java.util.Map;
 
-public class HintFragment extends Fragment {
+public class    HintFragment extends Fragment {
 
     private final Map<Integer, String> answers = new HashMap<Integer, String>();
 

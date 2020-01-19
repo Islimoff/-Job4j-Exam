@@ -8,20 +8,38 @@
         android:id="@+id/info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="info" />
+        android:layout_weight="100"
+        android:text="TextView"
+        android:textSize="24dp"/>
 
     <TextView
         android:id="@+id/result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="result" />
+        android:layout_weight="20"
+        android:textSize="24dp"
+        android:text="90%" />
 
     <TextView
         android:id="@+id/date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_weight="20"
+        android:textSize="24dp"
+        android:text="12.07.2019" />
+
+    <ImageView
+        android:id="@+id/edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="date" />
+        android:src="@android:drawable/ic_menu_edit" />
+
+    <ImageView
+        android:id="@+id/delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:src="@android:drawable/ic_menu_delete" />
+
 </LinearLayout>
