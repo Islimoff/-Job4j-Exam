@@ -3,6 +3,9 @@ package ru.job4j;
 import java.util.ArrayList;
 import java.util.List;
 
+import ru.job4j.models.Option;
+import ru.job4j.models.Question;
+
 public class Store {
 
     private static final Store STORE = new Store();

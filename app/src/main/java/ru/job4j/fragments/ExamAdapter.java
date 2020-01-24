@@ -1,4 +1,4 @@
-package ru.job4j;
+package ru.job4j.fragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,15 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
+
+import ru.job4j.R;
+import ru.job4j.activities.ExamActivity;
+import ru.job4j.models.Exam;
 
 public class ExamAdapter extends RecyclerView.Adapter<ExamAdapter.ExamHolder> {
 
