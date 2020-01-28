@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import ru.job4j.fragments.ConfirmHintDialogFragment;
 import ru.job4j.R;
-import ru.job4j.Store;
+import ru.job4j.data.Store;
 import ru.job4j.models.Option;
 import ru.job4j.models.Question;
 

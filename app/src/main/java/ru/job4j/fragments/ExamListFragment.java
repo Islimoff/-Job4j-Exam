@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import ru.job4j.R;
-import ru.job4j.SqlStore;
+import ru.job4j.data.SqlStore;
 import ru.job4j.models.Exam;
 
 public class ExamListFragment extends Fragment {

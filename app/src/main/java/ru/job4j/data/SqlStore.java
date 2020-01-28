@@ -1,4 +1,4 @@
-package ru.job4j;
+package ru.job4j.data;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,8 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-import ru.job4j.data.ExamBaseHelper;
-import ru.job4j.data.ExamDbSchema;
 import ru.job4j.models.Exam;
 
 public class SqlStore {

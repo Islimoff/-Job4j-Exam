@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import ru.job4j.R;
-import ru.job4j.SqlStore;
+import ru.job4j.data.SqlStore;
 import ru.job4j.models.Exam;
 
 public class ExamUpdateFragment extends Fragment {
