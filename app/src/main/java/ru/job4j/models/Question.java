@@ -10,10 +10,14 @@ public class Question {
     @PrimaryKey
     private int id;
     private String text;
-    private int answer;
+    private int examId;
+    private String answer;
+    private int position;
 
-    public Question(int id, String text, int answer) {
+    public Question(int id, int examId, int position, String text, String answer) {
         this.id = id;
+        this.examId=examId;
+        this.position=position;
         this.text = text;
         this.answer = answer;
     }
@@ -26,8 +30,24 @@ public class Question {
         return text;
     }
 
-    public int getAnswer() {
+    public String getAnswer() {
         return answer;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
+    public int getExamId() {
+        return examId;
+    }
+
+    public void setExamId(int examId) {
+        this.examId = examId;
     }
 
     @Override

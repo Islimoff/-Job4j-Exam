@@ -28,7 +28,7 @@ public class ExamUpdateFragment extends Fragment {
         Button save = view.findViewById(R.id.save);
         save.setOnClickListener(
                 btn -> {
-                    Exam exam = new Exam(args.getInt("id"), edit.getText().toString(),
+                    Exam exam = new Exam(args.getInt("id"), edit.getText().toString(),"some text",
                             System.currentTimeMillis(),
                             100);
                     ExamStore.getStore(getContext()).update(exam);

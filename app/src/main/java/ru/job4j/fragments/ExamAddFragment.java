@@ -26,7 +26,7 @@ public class ExamAddFragment extends Fragment {
         Button save = view.findViewById(R.id.save);
         save.setOnClickListener(
                 btn -> {
-                    Exam exam = new Exam(0, edit.getText().toString(),
+                    Exam exam = new Exam(0, edit.getText().toString(), "some text",
                             System.currentTimeMillis(),
                             100);
                     ExamStore.getStore(getContext()).add(exam);

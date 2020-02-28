@@ -49,26 +49,9 @@ public class ExamActivity extends AppCompatActivity implements ConfirmHintDialog
         previous.setOnClickListener(this::previousBtn);
         Button back = findViewById(R.id.back_to_list);
         back.setOnClickListener(this::backBtn);
-        Log.d(TAG, "onCreate");
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.d(TAG, "onStart");
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d(TAG, "onResume");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d(TAG, "onPause");
-    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -76,18 +59,6 @@ public class ExamActivity extends AppCompatActivity implements ConfirmHintDialog
         outState.putInt("BILL_TOTAL", currentBillTotal);
         outState.putInt("POSITION", position);
         Log.d(TAG, "current bill is " + currentBillTotal);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.d(TAG, "onStop");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d(TAG, "onDestroy");
     }
 
     private void fillForm() {
@@ -98,7 +69,7 @@ public class ExamActivity extends AppCompatActivity implements ConfirmHintDialog
         text.setText(question.getText());
 //        for (int index = 0; index != variants.getChildCount(); index++) {
 //            RadioButton button = (RadioButton) variants.getChildAt(index);
-////            Option option = question.getOptions().get(index);
+////          Option option = question.getOptions().get(index);
 //            button.setId(option.getId());
 //            button.setText(option.getText());
 //            if (option.getId() == Store.getStore().getAnswer(position)) {

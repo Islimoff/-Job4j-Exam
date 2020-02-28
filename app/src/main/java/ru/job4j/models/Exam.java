@@ -13,9 +13,10 @@ public class Exam {
     private long date;
     private int result;
 
-    public Exam(int id, String name, long date, int result) {
+    public Exam(int id, String name, String title, long date, int result) {
         this.id = id;
         this.name = name;
+        this.title = title;
         this.date = date;
         this.result = result;
     }

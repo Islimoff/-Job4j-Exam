@@ -112,9 +112,9 @@ public class ExamListFragment extends Fragment {
             holder.view.setOnClickListener(btn->
             {
                 FragmentManager fm = getFragmentManager();
-                Fragment fragment = new ExamAddFragment();
+                Fragment fragment = new StartExamFragment();
                 Bundle bundle = new Bundle();
-                bundle.putInt("id", exam.getId());
+                bundle.putString("title", exam.getTitle());
                 fragment.setArguments(bundle);
                 fm.beginTransaction()
                         .replace(R.id.content, fragment)
