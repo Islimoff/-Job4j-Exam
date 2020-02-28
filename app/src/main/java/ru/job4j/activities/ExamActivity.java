@@ -1,22 +1,20 @@
 package ru.job4j.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import ru.job4j.fragments.ConfirmHintDialogFragment;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+
 import ru.job4j.R;
 import ru.job4j.data.Store;
-import ru.job4j.models.Option;
+import ru.job4j.fragments.ConfirmHintDialogFragment;
 import ru.job4j.models.Question;
 
 public class ExamActivity extends AppCompatActivity implements ConfirmHintDialogFragment.ConfirmHintDialogListener {
@@ -98,15 +96,15 @@ public class ExamActivity extends AppCompatActivity implements ConfirmHintDialog
         final TextView text = findViewById(R.id.question);
         Question question = Store.getStore().getQuestion(position);
         text.setText(question.getText());
-        for (int index = 0; index != variants.getChildCount(); index++) {
-            RadioButton button = (RadioButton) variants.getChildAt(index);
-            Option option = question.getOptions().get(index);
-            button.setId(option.getId());
-            button.setText(option.getText());
-            if (option.getId() == Store.getStore().getAnswer(position)) {
-                button.setChecked(true);
-            }
-        }
+//        for (int index = 0; index != variants.getChildCount(); index++) {
+//            RadioButton button = (RadioButton) variants.getChildAt(index);
+////            Option option = question.getOptions().get(index);
+//            button.setId(option.getId());
+//            button.setText(option.getText());
+//            if (option.getId() == Store.getStore().getAnswer(position)) {
+//                button.setChecked(true);
+//            }
+//        }
     }
 
     private void showAnswer() {

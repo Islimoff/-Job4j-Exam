@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import ru.job4j.R;
-import ru.job4j.data.SqlStore;
+import ru.job4j.data.ExamStore;
 import ru.job4j.models.Exam;
 
 public class ExamListFragment extends Fragment {
@@ -44,7 +44,7 @@ public class ExamListFragment extends Fragment {
     }
 
     private void updateUI() {
-        List<Exam> exams = SqlStore.getStore(getActivity()).getExams();
+        List<Exam> exams = ExamStore.getStore(getActivity()).getAll();
         this.recycler.setAdapter(new ExamAdapter(exams));
     }
 
@@ -66,7 +66,7 @@ public class ExamListFragment extends Fragment {
                         .commit();
                 return true;
             case R.id.delete_exams:
-                SqlStore.getStore(getContext()).deleteAll();
+                ExamStore.getStore(getContext()).deleteAll();
                 updateUI();
             default:
                 return super.onOptionsItemSelected(item);
@@ -102,11 +102,25 @@ public class ExamListFragment extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull ExamHolder holder, int i) {
             Exam exam = this.exams.get(i);
-            TextView text = holder.view.findViewById(R.id.info);
+            TextView name = holder.view.findViewById(R.id.info);
+            TextView result=holder.view.findViewById(R.id.result);
             if ((i % 2) == 0) {
                 holder.view.setBackgroundColor(Color.parseColor("#d8d8d8"));
             }
-            text.setText(exam.getName());
+            name.setText(exam.getName());
+            result.setText(String.valueOf(exam.getResult())+"%");
+            holder.view.setOnClickListener(btn->
+            {
+                FragmentManager fm = getFragmentManager();
+                Fragment fragment = new ExamAddFragment();
+                Bundle bundle = new Bundle();
+                bundle.putInt("id", exam.getId());
+                fragment.setArguments(bundle);
+                fm.beginTransaction()
+                        .replace(R.id.content, fragment)
+                        .addToBackStack(null)
+                        .commit();
+            });
             holder.view.findViewById(R.id.edit)
                     .setOnClickListener(
                             btn -> {
@@ -125,7 +139,7 @@ public class ExamListFragment extends Fragment {
 
             holder.view.findViewById(R.id.delete)
                     .setOnClickListener(
-                            btn -> { SqlStore.getStore(getActivity()).deleteExam(exam.getId());
+                            btn -> { ExamStore.getStore(getActivity()).delete(exam.getId());
                                 exams.remove(exam);
                                 notifyItemRemoved(i);
                             }

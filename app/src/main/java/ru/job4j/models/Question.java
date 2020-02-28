@@ -1,19 +1,20 @@
 package ru.job4j.models;
 
 
-import java.util.List;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+@Entity
 public class Question {
 
+    @PrimaryKey
     private int id;
     private String text;
-    private List<Option> options;
     private int answer;
 
-    public Question(int id, String text, List<Option> options, int answer) {
+    public Question(int id, String text, int answer) {
         this.id = id;
         this.text = text;
-        this.options = options;
         this.answer = answer;
     }
 
@@ -23,10 +24,6 @@ public class Question {
 
     public String getText() {
         return text;
-    }
-
-    public List<Option> getOptions() {
-        return options;
     }
 
     public int getAnswer() {

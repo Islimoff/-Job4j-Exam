@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import ru.job4j.R;
-import ru.job4j.data.SqlStore;
+import ru.job4j.data.ExamStore;
 import ru.job4j.models.Exam;
 
 public class ExamAddFragment extends Fragment {
@@ -29,7 +29,7 @@ public class ExamAddFragment extends Fragment {
                     Exam exam = new Exam(0, edit.getText().toString(),
                             System.currentTimeMillis(),
                             100);
-                    SqlStore.getStore(getContext()).addExam(exam);
+                    ExamStore.getStore(getContext()).add(exam);
                     FragmentManager fm = getFragmentManager();
                     fm.beginTransaction()
                             .replace(R.id.content, new ExamListFragment())

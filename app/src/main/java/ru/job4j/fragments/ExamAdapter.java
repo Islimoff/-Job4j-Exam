@@ -52,7 +52,7 @@ public class ExamAdapter extends RecyclerView.Adapter<ExamAdapter.ExamHolder> {
         TextView date=holder.view.findViewById(R.id.date);
         text.setText(exam.getName());
         result.setText(String.valueOf(exam.getResult())+"%");
-        date.setText(String.valueOf(exam.getTime()));
+        date.setText(String.valueOf(exam.getDate()));
         text.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View view) {

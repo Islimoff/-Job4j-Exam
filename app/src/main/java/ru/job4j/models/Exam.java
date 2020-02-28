@@ -1,15 +1,22 @@
 package ru.job4j.models;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class Exam {
+
+    @PrimaryKey
     private int id;
     private String name;
-    private long time;
+    private String title;
+    private long date;
     private int result;
 
-    public Exam(int id, String name, long time, int result) {
+    public Exam(int id, String name, long date, int result) {
         this.id = id;
         this.name = name;
-        this.time = time;
+        this.date = date;
         this.result = result;
     }
 
@@ -17,8 +24,8 @@ public class Exam {
         return name;
     }
 
-    public long getTime() {
-        return time;
+    public long getDate() {
+        return date;
     }
 
     public int getResult() {
@@ -27,6 +34,14 @@ public class Exam {
 
     public int getId() {
         return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     @Override
@@ -47,7 +62,7 @@ public class Exam {
         return "Exam{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", time=" + time +
+                ", date=" + date +
                 ", result=" + result +
                 '}';
     }

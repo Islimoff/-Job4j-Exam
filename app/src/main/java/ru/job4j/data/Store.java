@@ -39,8 +39,8 @@ public class Store {
         List<Question> questions = new ArrayList<>();
         String questionText[] = {"How many primitive variables does Java have?", "What is Java Virtual Machine?", "What is happen if we try unboxing null?"};
         for (int i = 1; i < 4; i++) {
-            Question question = new Question(i, questionText[i - 1], optionsGenerator(i), 4);
-            questions.add(question);
+//            Question question = new Question(i, questionText[i - 1], optionsGenerator(i), 4);
+//            questions.add(question);
         }
         return questions;
     }
