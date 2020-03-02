@@ -1,20 +1,18 @@
 package ru.job4j.models;
 
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
 
-@Entity
 public class Option {
 
-    @PrimaryKey
     private int id;
     private String text;
-    private int question_id;
-    private String correct;
+    private long question_id;
+    private boolean correct;
 
-    public Option(int id, String text) {
+    public Option(int id,long question_id, String text,int correct) {
         this.id = id;
         this.text = text;
+        this.question_id=question_id;
+        this.correct=correct != 0;
     }
 
     public int getId() {
@@ -46,19 +44,19 @@ public class Option {
                 '}';
     }
 
-    public int getQuestion_id() {
+    public long getQuestion_id() {
         return question_id;
     }
 
-    public void setQuestion_id(int question_id) {
+    public void setQuestion_id(long question_id) {
         this.question_id = question_id;
     }
 
-    public String getCorrect() {
+    public boolean getCorrect() {
         return correct;
     }
 
-    public void setCorrect(String correct) {
+    public void setCorrect(boolean correct) {
         this.correct = correct;
     }
 }

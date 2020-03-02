@@ -26,7 +26,6 @@ public class ExamBaseHelper extends SQLiteOpenHelper {
                 ")";
         String CREATE_QUESTIONS_TABLE = "create table " + QuestionTable.NAME + " (" +
                 "id integer primary key autoincrement, " +
-                QuestionTable.Cols.NAME + ", " +
                 QuestionTable.Cols.TITLE + ", " +
                 QuestionTable.Cols.EXAM_ID + ", " +
                 QuestionTable.Cols.ANSWER_ID + ", " +
@@ -34,6 +33,7 @@ public class ExamBaseHelper extends SQLiteOpenHelper {
                 ")";
 
         String CREATE_OPTIONS_TABLE = "create table " + OptionTable.NAME + " (" +
+                "id integer primary key autoincrement, " +
                 OptionTable.Cols.TEXT + ", " +
                 OptionTable.Cols.QUESTION_ID + ", " +
                 OptionTable.Cols.CORRECT + " " +

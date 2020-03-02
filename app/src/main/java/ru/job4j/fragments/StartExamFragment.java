@@ -10,20 +10,35 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import ru.job4j.R;
 
 public class StartExamFragment extends Fragment {
 
+    private Bundle args;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.start_exam,container,false);
-        Bundle args = getArguments();
-        TextView title=view.findViewById(R.id.title_exam);
+        View view = inflater.inflate(R.layout.start_exam, container, false);
+        args = getArguments();
+        TextView title = view.findViewById(R.id.title_exam);
         title.setText(args.getString("title"));
         Button startExam = view.findViewById(R.id.start_button);
-
+        startExam.setOnClickListener(this::startFragment);
         return view;
+    }
+
+    private void startFragment(View view) {
+        FragmentManager fm = getFragmentManager();
+        Fragment fragment = new ExamFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("id", args.getInt("examId"));
+        fragment.setArguments(bundle);
+        fm.beginTransaction()
+                .replace(R.id.content, fragment)
+                .addToBackStack(null)
+                .commit();
     }
 }

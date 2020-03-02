@@ -48,7 +48,7 @@ public class Store {
     private static List<Option> optionsGenerator(int id) {
         List<Option> options = new ArrayList<>();
         for (int i = 1; i < 5; i++) {
-            Option option = new Option(i, id + "." + i);
+            Option option = new Option(i,0, id + "." + i,0);
             options.add(option);
         }
         return options;

@@ -29,33 +29,54 @@ public class OptionStore implements SqlStore<Option> {
     }
 
     @Override
-    public void add(Option option) {
-        db.insert(OptionTable.NAME, null, getContentValues(option));
+    public long add(Option option) {
+        return db.insert(OptionTable.NAME, null, getContentValues(option));
     }
 
     @Override
-    public void update(Option option) {
-        db.update(OptionTable.NAME, getContentValues(option),
+    public long update(Option option) {
+       return db.update(OptionTable.NAME, getContentValues(option),
                 "id = ?", new String[]{String.valueOf(option.getId())});
     }
 
     @Override
-    public void delete(int id) {
-        db.delete(OptionTable.NAME, "id = ?", new String[]{String.valueOf(id)});
+    public long delete(int id) {
+          return db.delete(OptionTable.NAME, "id = ?", new String[]{String.valueOf(id)});
+    }
+
+    public List<Option> getByQuestionId(long questionId){
+        List<Option> options = new ArrayList<>();
+        Cursor cursor = this.db.query(
+                ExamDbSchema.OptionTable.NAME,
+                null, "question_id = "+questionId, null,
+                null, null, null
+        );
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            options.add(new Option(cursor.getInt(cursor.getColumnIndex(OptionTable.Cols.ID)),
+                    cursor.getLong(cursor.getColumnIndex(OptionTable.Cols.QUESTION_ID)),
+                    cursor.getString(cursor.getColumnIndex(OptionTable.Cols.TEXT)),
+                    cursor.getInt(cursor.getColumnIndex(OptionTable.Cols.CORRECT))));
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return options;
     }
 
     @Override
     public List<Option> getAll() {
         List<Option> options = new ArrayList<>();
         Cursor cursor = this.db.query(
-                ExamDbSchema.ExamTable.NAME,
+                ExamDbSchema.OptionTable.NAME,
                 null, null, null,
                 null, null, null
         );
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            options.add(new Option(cursor.getInt(cursor.getColumnIndex("id")),
-                    cursor.getString(cursor.getColumnIndex("text"))));
+            options.add(new Option(cursor.getInt(cursor.getColumnIndex(OptionTable.Cols.ID)),
+                    cursor.getLong(cursor.getColumnIndex(OptionTable.Cols.QUESTION_ID)),
+                    cursor.getString(cursor.getColumnIndex(OptionTable.Cols.TEXT)),
+                    cursor.getInt(cursor.getColumnIndex(OptionTable.Cols.CORRECT))));
             cursor.moveToNext();
         }
         cursor.close();
@@ -65,6 +86,9 @@ public class OptionStore implements SqlStore<Option> {
     @Override
     public ContentValues getContentValues(Option option) {
         ContentValues values = new ContentValues();
+        values.put(OptionTable.Cols.QUESTION_ID,option.getQuestion_id());
+        values.put(OptionTable.Cols.CORRECT,option.getCorrect());
+        values.put(OptionTable.Cols.TEXT,option.getText());
         return values;
     }
 }

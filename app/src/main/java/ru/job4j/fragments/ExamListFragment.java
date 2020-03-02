@@ -114,6 +114,7 @@ public class ExamListFragment extends Fragment {
                 FragmentManager fm = getFragmentManager();
                 Fragment fragment = new StartExamFragment();
                 Bundle bundle = new Bundle();
+                bundle.putInt("examId",exam.getId());
                 bundle.putString("title", exam.getTitle());
                 fragment.setArguments(bundle);
                 fm.beginTransaction()

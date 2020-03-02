@@ -1,20 +1,14 @@
 package ru.job4j.models;
 
-
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-
-@Entity
 public class Question {
 
-    @PrimaryKey
     private int id;
     private String text;
-    private int examId;
+    private long examId;
     private String answer;
     private int position;
 
-    public Question(int id, int examId, int position, String text, String answer) {
+    public Question(int id, long examId, int position, String text, String answer) {
         this.id = id;
         this.examId=examId;
         this.position=position;
@@ -42,11 +36,11 @@ public class Question {
         this.position = position;
     }
 
-    public int getExamId() {
+    public long getExamId() {
         return examId;
     }
 
-    public void setExamId(int examId) {
+    public void setExamId(long examId) {
         this.examId = examId;
     }
 

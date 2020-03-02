@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface SqlStore<T> {
 
-    void add(T object);
+    long add(T object);
 
-    void update(T object);
+    long update(T object);
 
-    void delete(int id);
+    long delete(int id);
 
     List<T> getAll();
 

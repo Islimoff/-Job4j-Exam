@@ -7,7 +7,7 @@ public class ExamDbSchema {
         public static final String NAME = "exams";
 
         public static final class Cols {
-
+            public static final String ID = "id";
             public static final String NAME = "name";
             public static final String TITLE = "title";
             public static final String RESULT = "result";
@@ -21,7 +21,7 @@ public class ExamDbSchema {
 
         public static final class Cols {
 
-            public static final String NAME = "name";
+            public static final String ID = "id";
             public static final String TITLE = "title";
             public static final String EXAM_ID = "exam_id";
             public static final String ANSWER_ID = "answer_id";
@@ -35,6 +35,7 @@ public class ExamDbSchema {
 
         public static final class Cols {
 
+            public static final String ID = "id";
             public static final String TEXT = "text";
             public static final String QUESTION_ID = "question_id";
             public static final String CORRECT = "correct";

@@ -135,12 +135,12 @@ public class ExamActivity extends AppCompatActivity implements ConfirmHintDialog
     private void calculateResults() {
         correctAnswers = 0;
         wrongAnswers = Store.getStore().getQuestions().size();
-        for (int i = 0; i < Store.getStore().getQuestions().size(); i++) {
-            if (Store.getStore().getAnswer(i) == Store.getStore().getQuestion(i).getAnswer()) {
-                correctAnswers++;
-                wrongAnswers--;
-            }
-        }
+//        for (int i = 0; i < Store.getStore().getQuestions().size(); i++) {
+//            if (Store.getStore().getAnswer(i) == Store.getStore().getQuestion(i).getAnswer()) {
+//                correctAnswers++;
+//                wrongAnswers--;
+//            }
+//        }
     }
 
     private void backBtn(View view) {

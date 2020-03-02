@@ -29,34 +29,48 @@ public class QuestionStore implements SqlStore<Question> {
     }
 
     @Override
-    public void add(Question question) {
-        db.insert(QuestionTable.NAME, null, getContentValues(question));
+    public long add(Question question) {
+       return db.insert(QuestionTable.NAME, null, getContentValues(question));
     }
 
     @Override
-    public void update(Question question) {
-        db.update(QuestionTable.NAME, getContentValues(question),
+    public long update(Question question) {
+        return db.update(QuestionTable.NAME, getContentValues(question),
                 "id = ?", new String[]{String.valueOf(question.getId())});
     }
 
     @Override
-    public void delete(int id) {
-        db.delete(QuestionTable.NAME, "id = ?", new String[]{String.valueOf(id)});
+    public long delete(int id) {
+        return db.delete(QuestionTable.NAME, "id = ?", new String[]{String.valueOf(id)});
+    }
+
+    public List<Question> getByExamId(long examId){
+        List<Question> questions = new ArrayList<>();
+        Cursor cursor = db.query(
+                ExamDbSchema.QuestionTable.NAME,
+                null, "exam_id = "+examId, null,
+                null, null, null
+        );
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            questions.add(getQuestion(cursor));
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return questions;
     }
 
     @Override
     public List<Question> getAll() {
         List<Question> questions = new ArrayList<>();
         Cursor cursor = this.db.query(
-                ExamDbSchema.ExamTable.NAME,
+                ExamDbSchema.QuestionTable.NAME,
                 null, null, null,
                 null, null, null
         );
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            questions.add(new Question(cursor.getInt(cursor.getColumnIndex("id")),
-                    cursor.getString(cursor.getColumnIndex("text")),
-                    cursor.getInt(cursor.getColumnIndex("answer"))));
+            questions.add(getQuestion(cursor));
             cursor.moveToNext();
         }
         cursor.close();
@@ -65,6 +79,19 @@ public class QuestionStore implements SqlStore<Question> {
 
     @Override
     public ContentValues getContentValues(Question question) {
-        return null;
+        ContentValues values = new ContentValues();
+        values.put(QuestionTable.Cols.TITLE, question.getText());
+        values.put(QuestionTable.Cols.EXAM_ID,question.getExamId());
+        values.put(QuestionTable.Cols.ANSWER_ID, question.getAnswer());
+        values.put(QuestionTable.Cols.POSITION, question.getPosition());
+        return values;
+    }
+
+    private Question getQuestion(Cursor cursor){
+        return new Question(cursor.getInt(cursor.getColumnIndex(QuestionTable.Cols.ID)),
+                cursor.getLong(cursor.getColumnIndex(QuestionTable.Cols.EXAM_ID)),
+                cursor.getInt(cursor.getColumnIndex(QuestionTable.Cols.POSITION)),
+                cursor.getString(cursor.getColumnIndex(QuestionTable.Cols.TITLE)),
+                cursor.getString(cursor.getColumnIndex(QuestionTable.Cols.ANSWER_ID)));
     }
 }

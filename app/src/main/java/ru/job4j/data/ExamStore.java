@@ -5,10 +5,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import java.security.cert.PKIXRevocationChecker;
 import java.util.ArrayList;
 import java.util.List;
 
+import ru.job4j.data.ExamDbSchema.ExamTable;
+import ru.job4j.models.Option;
 import ru.job4j.models.Exam;
 import ru.job4j.models.Question;
 
@@ -33,24 +34,24 @@ public class ExamStore implements SqlStore<Exam> {
     }
 
     @Override
-    public void add(Exam exam) {
-        db.insert(ExamDbSchema.ExamTable.NAME, null, getContentValues(exam));
+    public long add(Exam exam) {
+        return db.insert(ExamTable.NAME, null, getContentValues(exam));
     }
 
     @Override
-    public void update(Exam exam) {
-        db.update(ExamDbSchema.ExamTable.NAME, getContentValues(exam),
+    public long update(Exam exam) {
+        return db.update(ExamTable.NAME, getContentValues(exam),
                 "id = ?", new String[]{String.valueOf(exam.getId())});
     }
 
     @Override
-    public void delete(int id) {
-        db.delete(ExamDbSchema.ExamTable.NAME, "id = ?", new String[]{String.valueOf(id)});
+    public long delete(int id) {
+        return db.delete(ExamTable.NAME, "id = ?", new String[]{String.valueOf(id)});
     }
 
-    public Exam findById(int id) {
+    public Exam getById(int id) {
         Cursor cursor = db.query(
-                ExamDbSchema.ExamTable.NAME,
+                ExamTable.NAME,
                 null, "id = ?", null,
                 null, null, null
         );
@@ -64,7 +65,7 @@ public class ExamStore implements SqlStore<Exam> {
     public List<Exam> getAll() {
         List<Exam> exams = new ArrayList<>();
         Cursor cursor = db.query(
-                ExamDbSchema.ExamTable.NAME,
+                ExamTable.NAME,
                 null, null, null,
                 null, null, null
         );
@@ -80,39 +81,44 @@ public class ExamStore implements SqlStore<Exam> {
     @Override
     public ContentValues getContentValues(Exam exam) {
         ContentValues values = new ContentValues();
-        values.put(ExamDbSchema.ExamTable.Cols.NAME, exam.getName());
-        values.put(ExamDbSchema.ExamTable.Cols.TITLE, exam.getTitle());
-        values.put(ExamDbSchema.ExamTable.Cols.RESULT, exam.getResult());
-        values.put(ExamDbSchema.ExamTable.Cols.DATE, exam.getDate());
+        values.put(ExamTable.Cols.NAME, exam.getName());
+        values.put(ExamTable.Cols.TITLE, exam.getTitle());
+        values.put(ExamTable.Cols.RESULT, exam.getResult());
+        values.put(ExamTable.Cols.DATE, exam.getDate());
         return values;
     }
 
     public void deleteAll() {
-        db.delete(ExamDbSchema.ExamTable.NAME, null, null);
+        db.delete(ExamTable.NAME, null, null);
     }
 
     private void generateData() {
         Cursor cursor = this.db.query(
-                ExamDbSchema.ExamTable.NAME,
+                ExamTable.NAME,
                 null, null, null,
                 null, null, null
         );
         if (cursor.moveToFirst()) {
             return;
         } else {
-            for (int i = 0; i < 5; i++) {
+            for (int i = 1; i < 5; i++) {
                 Exam exam = new Exam(0, "exam" + i,
                         "some text describing the exam" + i, 0, 0);
-               int examId=this.add(exam);
+               long examId=this.add(exam);
                 for (int j = 1; j < 4; j++) {
                     Question question= new Question(0,examId,j,
-                            "Some Question"+j,"Variant"+j
+                            "Some Question"+j+" for Exam"+examId,"Variant"+j
                     );
-                    int questionId=QuestionStore.getStore(context).add(question);
-                    for (int r = 1; r < 4; r++) {
-                        Option option= new Option(0,questionId,r,
-                                "Some Question"+r,"Variant"+r
+                    long questionId=QuestionStore.getStore(context).add(question);
+                    for (int r = 1; r < 5; r++) {
+                        int correct=0;
+                        if(r==1){
+                            correct=1;
+                        }
+                        Option option= new Option(0,questionId,
+                                "Some variant"+r+" for question"+j,correct
                         );
+                        OptionStore.getStore(context).add(option);
                     }
                 }
             }
@@ -121,11 +127,11 @@ public class ExamStore implements SqlStore<Exam> {
 
     private Exam getExam(Cursor cursor) {
         return new Exam(
-                cursor.getInt(cursor.getColumnIndex("id")),
-                cursor.getString(cursor.getColumnIndex("name")),
-                cursor.getString(cursor.getColumnIndex("title")),
-                cursor.getLong(cursor.getColumnIndex("date")),
-                cursor.getInt(cursor.getColumnIndex("result"))
+                cursor.getInt(cursor.getColumnIndex(ExamTable.Cols.ID)),
+                cursor.getString(cursor.getColumnIndex(ExamTable.Cols.NAME)),
+                cursor.getString(cursor.getColumnIndex(ExamTable.Cols.TITLE)),
+                cursor.getLong(cursor.getColumnIndex(ExamTable.Cols.DATE)),
+                cursor.getInt(cursor.getColumnIndex(ExamTable.Cols.RESULT))
         );
     }
 }
