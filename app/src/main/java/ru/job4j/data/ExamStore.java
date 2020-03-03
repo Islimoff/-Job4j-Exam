@@ -107,7 +107,7 @@ public class ExamStore implements SqlStore<Exam> {
                long examId=this.add(exam);
                 for (int j = 1; j < 4; j++) {
                     Question question= new Question(0,examId,j,
-                            "Some Question"+j+" for Exam"+examId,"Variant"+j
+                            "Some Question"+j+" for Exam"+examId,0
                     );
                     long questionId=QuestionStore.getStore(context).add(question);
                     for (int r = 1; r < 5; r++) {

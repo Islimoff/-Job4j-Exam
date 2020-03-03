@@ -5,15 +5,15 @@ public class Question {
     private int id;
     private String text;
     private long examId;
-    private String answer;
+    private int answerId;
     private int position;
 
-    public Question(int id, long examId, int position, String text, String answer) {
+    public Question(int id, long examId, int position, String text, int answerId) {
         this.id = id;
         this.examId=examId;
         this.position=position;
         this.text = text;
-        this.answer = answer;
+        this.answerId = answerId;
     }
 
     public int getId() {
@@ -24,8 +24,12 @@ public class Question {
         return text;
     }
 
-    public String getAnswer() {
-        return answer;
+    public int getAnswer() {
+        return answerId;
+    }
+
+    public void setAnswerId(int answerId){
+        this.answerId=answerId;
     }
 
     public int getPosition() {
@@ -62,7 +66,7 @@ public class Question {
         return "Question{" +
                 "id=" + id +
                 ", text='" + text + '\'' +
-                ", answer=" + answer +
+                ", answer=" + answerId +
                 '}';
     }
 }

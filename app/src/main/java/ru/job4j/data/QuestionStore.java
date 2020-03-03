@@ -92,6 +92,6 @@ public class QuestionStore implements SqlStore<Question> {
                 cursor.getLong(cursor.getColumnIndex(QuestionTable.Cols.EXAM_ID)),
                 cursor.getInt(cursor.getColumnIndex(QuestionTable.Cols.POSITION)),
                 cursor.getString(cursor.getColumnIndex(QuestionTable.Cols.TITLE)),
-                cursor.getString(cursor.getColumnIndex(QuestionTable.Cols.ANSWER_ID)));
+                cursor.getInt(cursor.getColumnIndex(QuestionTable.Cols.ANSWER_ID)));
     }
 }
