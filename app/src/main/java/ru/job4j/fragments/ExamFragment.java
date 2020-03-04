@@ -35,8 +35,7 @@ public class ExamFragment extends Fragment {
     private List<Option> options;
     private RadioGroup variants;
     private Question question;
-    private int correctAnswers;
-    private int wrongAnswers;
+    private boolean answers[];
 
     @Nullable
     @Override
@@ -54,49 +53,45 @@ public class ExamFragment extends Fragment {
         previous.setOnClickListener(this::previousBtn);
         Button back = view.findViewById(R.id.back_to_list);
         back.setOnClickListener(this::backBtn);
-        correctAnswers = 0;
-        wrongAnswers = questions.size();
+        answers = new boolean[questions.size()];
         return view;
     }
 
     private void fillForm() {
         variants = view.findViewById(R.id.variants);
+        variants.clearCheck();
         view.findViewById(R.id.previous).setEnabled(position != 0);
         TextView questionText = view.findViewById(R.id.question);
         question = questions.get(position);
-        if(question.getAnswer()==0){
-            variants.clearCheck();
-        }else {
-            variants.check(question.getAnswer());
-        }
         options = OptionStore.getStore(getContext()).getByQuestionId(question.getId());
         questionText.setText(question.getText());
         for (int index = 0; index != variants.getChildCount(); index++) {
             RadioButton button = (RadioButton) variants.getChildAt(index);
             Option option = options.get(index);
-            button.setId(index+1);
+            button.setId(index + 1);
             button.setText(option.getText());
+            if (index + 1 == question.getAnswer()) {
+                button.setChecked(true);
+            }
         }
-        calculateResults();
     }
 
     private void nextBtn(View view) {
         question.setAnswerId(variants.getCheckedRadioButtonId());
         QuestionStore.getStore(getContext()).update(question);
-        if (position == questions.size() - 1) {
-            calculateResults();
-            Intent intent = new Intent(getContext(), ResultActivity.class);
-            intent.putExtra(CORRECTANSWERS, correctAnswers);
-            intent.putExtra(WRONGANSWERS, wrongAnswers);
-            startActivity(intent);
-        } else {
-            if (variants.getCheckedRadioButtonId() != -1) {
+        if (variants.getCheckedRadioButtonId() != -1) {
+            checkAnswer();
+            if (position == questions.size() - 1) {
+                Intent intent = new Intent(getContext(), ResultActivity.class);
+                intent.putExtra(CORRECTANSWERS, calculateResults());
+                startActivity(intent);
+            } else {
                 showAnswer();
                 position++;
                 fillForm();
-            } else {
-                showWarning();
             }
+        } else {
+            showWarning();
         }
     }
 
@@ -127,11 +122,17 @@ public class ExamFragment extends Fragment {
         ).show();
     }
 
-    private void calculateResults() {
-      int c= variants.getCheckedRadioButtonId();
-            if (options.get(c-1).getCorrect()) {
-                correctAnswers++;
-                wrongAnswers--;
-            }
+    private void checkAnswer() {
+        int checkedRadioButtonId = variants.getCheckedRadioButtonId();
+        answers[position] = options.get(checkedRadioButtonId - 1).getCorrect();
+    }
+
+    private float calculateResults() {
+        float correctAnswers = 0;
+        for (int i = 0; i != questions.size(); i++) {
+            if (answers[i]) correctAnswers++;
+        }
+        float ffff=correctAnswers / (float)questions.size()*100;
+        return correctAnswers / (float)questions.size()*100;
     }
 }
