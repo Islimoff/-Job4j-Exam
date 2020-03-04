@@ -52,7 +52,7 @@ public class ExamStore implements SqlStore<Exam> {
     public Exam getById(int id) {
         Cursor cursor = db.query(
                 ExamTable.NAME,
-                null, "id = ?", null,
+                null, "id = "+id, null,
                 null, null, null
         );
         cursor.moveToFirst();
@@ -105,7 +105,7 @@ public class ExamStore implements SqlStore<Exam> {
                 Exam exam = new Exam(0, "exam" + i,
                         "some text describing the exam" + i, 0, 0);
                long examId=this.add(exam);
-                for (int j = 1; j < 4; j++) {
+                for (int j = 1; j < 5; j++) {
                     Question question= new Question(0,examId,j,
                             "Some Question"+j+" for Exam"+examId,0
                     );

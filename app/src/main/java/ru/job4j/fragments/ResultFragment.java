@@ -22,8 +22,7 @@ public class ResultFragment extends Fragment {
         final TextView text = view.findViewById(R.id.answers);
         Bundle arguments = getArguments();
         int correctAnswers = arguments.getInt(ExamActivity.CORRECTANSWERS, 0);
-        int wrongAnswers = arguments.getInt(ExamActivity.WRONGANSWERS, 0);
-        text.setText("Correct Answers: " + correctAnswers + "\nWrong Answers: " + wrongAnswers);
+        text.setText("Your result is: " + correctAnswers + "%");
         return view;
     }
 

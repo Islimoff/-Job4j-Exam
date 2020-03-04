@@ -45,6 +45,10 @@ public class Exam {
         this.title = title;
     }
 
+    public void setResult(int result) {
+        this.result = result;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

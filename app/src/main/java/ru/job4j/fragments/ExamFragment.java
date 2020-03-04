@@ -19,16 +19,17 @@ import java.util.List;
 
 import ru.job4j.R;
 import ru.job4j.activities.ResultActivity;
+import ru.job4j.data.ExamStore;
 import ru.job4j.data.OptionStore;
 import ru.job4j.data.QuestionStore;
 import ru.job4j.data.Store;
+import ru.job4j.models.Exam;
 import ru.job4j.models.Option;
 import ru.job4j.models.Question;
 
 public class ExamFragment extends Fragment {
 
     public static final String CORRECTANSWERS = "correctAnswers";
-    public static final String WRONGANSWERS = "wrongAnswers";
     private View view;
     private int position = 0;
     private List<Question> questions;
@@ -36,14 +37,16 @@ public class ExamFragment extends Fragment {
     private RadioGroup variants;
     private Question question;
     private boolean answers[];
+    private int examId;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_exam, container, false);
         Bundle args = getArguments();
+        examId= args.getInt("id");
         questions = QuestionStore.getStore(getContext())
-                .getByExamId(args.getInt("id"));
+                .getByExamId(examId);
         fillForm();
         Button next = view.findViewById(R.id.next);
         next.setOnClickListener(this::nextBtn);
@@ -82,6 +85,10 @@ public class ExamFragment extends Fragment {
         if (variants.getCheckedRadioButtonId() != -1) {
             checkAnswer();
             if (position == questions.size() - 1) {
+                int result=calculateResults();
+               Exam exam=ExamStore.getStore(getContext()).getById(examId);
+               exam.setResult(result);
+                ExamStore.getStore(getContext()).update(exam);
                 Intent intent = new Intent(getContext(), ResultActivity.class);
                 intent.putExtra(CORRECTANSWERS, calculateResults());
                 startActivity(intent);
@@ -127,12 +134,12 @@ public class ExamFragment extends Fragment {
         answers[position] = options.get(checkedRadioButtonId - 1).getCorrect();
     }
 
-    private float calculateResults() {
+    private int calculateResults() {
         float correctAnswers = 0;
         for (int i = 0; i != questions.size(); i++) {
             if (answers[i]) correctAnswers++;
         }
-        float ffff=correctAnswers / (float)questions.size()*100;
-        return correctAnswers / (float)questions.size()*100;
+        int result=(int)(correctAnswers / (float) questions.size() * 100);
+        return (int)(correctAnswers / (float) questions.size() * 100);
     }
 }
