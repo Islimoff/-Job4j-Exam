@@ -11,7 +11,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import ru.job4j.R;
-import ru.job4j.activities.ExamActivity;
 
 public class ResultFragment extends Fragment {
 
@@ -21,16 +20,15 @@ public class ResultFragment extends Fragment {
         View view = inflater.inflate(R.layout.result_activity, container, false);
         final TextView text = view.findViewById(R.id.answers);
         Bundle arguments = getArguments();
-        int correctAnswers = arguments.getInt(ExamActivity.CORRECTANSWERS, 0);
+        int correctAnswers = arguments.getInt(ExamFragment.CORRECTANSWERS, 0);
         text.setText("Your result is: " + correctAnswers + "%");
         return view;
     }
 
-    public static ResultFragment of(int correctAnswers, int wrongAnswers) {
+    public static ResultFragment of(int correctAnswers) {
         ResultFragment resultFragment = new ResultFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt(ExamActivity.CORRECTANSWERS, correctAnswers);
-        bundle.putInt(ExamActivity.WRONGANSWERS, wrongAnswers);
+        bundle.putInt(ExamFragment.CORRECTANSWERS, correctAnswers);
         resultFragment.setArguments(bundle);
         return resultFragment;
     }

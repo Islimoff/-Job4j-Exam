@@ -1,5 +1,6 @@
 package ru.job4j.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +14,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import ru.job4j.R;
+import ru.job4j.activities.ExamActivity;
 
 public class StartExamFragment extends Fragment {
 
     private Bundle args;
+    public static final String EXAM_ID = "id";
 
     @Nullable
     @Override
@@ -31,14 +34,8 @@ public class StartExamFragment extends Fragment {
     }
 
     private void startFragment(View view) {
-        FragmentManager fm = getFragmentManager();
-        Fragment fragment = new ExamFragment();
-        Bundle bundle = new Bundle();
-        bundle.putInt("id", args.getInt("examId"));
-        fragment.setArguments(bundle);
-        fm.beginTransaction()
-                .replace(R.id.content, fragment)
-                .addToBackStack(null)
-                .commit();
+        Intent intent = new Intent(getContext(), ExamActivity.class);
+        intent.putExtra("id", args.getInt("examId"));
+        startActivity(intent);
     }
 }

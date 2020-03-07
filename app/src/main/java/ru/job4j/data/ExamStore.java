@@ -22,7 +22,7 @@ public class ExamStore implements SqlStore<Exam> {
     private ExamStore(Context context) {
         this.db = new ExamBaseHelper(context.getApplicationContext())
                 .getWritableDatabase();
-        this.context=context;
+        this.context = context;
         generateData();
     }
 
@@ -50,31 +50,40 @@ public class ExamStore implements SqlStore<Exam> {
     }
 
     public Exam getById(int id) {
-        Cursor cursor = db.query(
-                ExamTable.NAME,
-                null, "id = "+id, null,
-                null, null, null
-        );
-        cursor.moveToFirst();
-        Exam exam = getExam(cursor);
-        cursor.close();
+        Cursor cursor = null;
+        Exam exam=null;
+        try {
+            cursor = db.query(
+                    ExamTable.NAME,
+                    null, "id = " + id, null,
+                    null, null, null
+            );
+            cursor.moveToFirst();
+             exam = getExam(cursor);
+        } finally {
+            cursor.close();
+        }
         return exam;
     }
 
     @Override
     public List<Exam> getAll() {
         List<Exam> exams = new ArrayList<>();
-        Cursor cursor = db.query(
-                ExamTable.NAME,
-                null, null, null,
-                null, null, null
-        );
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            exams.add(getExam(cursor));
-            cursor.moveToNext();
+        Cursor cursor = null;
+        try {
+            cursor = db.query(
+                    ExamTable.NAME,
+                    null, null, null,
+                    null, null, null
+            );
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                exams.add(getExam(cursor));
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
         }
-        cursor.close();
         return exams;
     }
 
@@ -93,35 +102,40 @@ public class ExamStore implements SqlStore<Exam> {
     }
 
     private void generateData() {
-        Cursor cursor = this.db.query(
-                ExamTable.NAME,
-                null, null, null,
-                null, null, null
-        );
-        if (cursor.moveToFirst()) {
-            return;
-        } else {
-            for (int i = 1; i < 5; i++) {
-                Exam exam = new Exam(0, "exam" + i,
-                        "some text describing the exam" + i, 0, 0);
-               long examId=this.add(exam);
-                for (int j = 1; j < 5; j++) {
-                    Question question= new Question(0,examId,j,
-                            "Some Question"+j+" for Exam"+examId,0
-                    );
-                    long questionId=QuestionStore.getStore(context).add(question);
-                    for (int r = 1; r < 5; r++) {
-                        int correct=0;
-                        if(r==1){
-                            correct=1;
-                        }
-                        Option option= new Option(0,questionId,
-                                "Some variant"+r+" for question"+j,correct
+        Cursor cursor = null;
+        try {
+            cursor = this.db.query(
+                    ExamTable.NAME,
+                    null, null, null,
+                    null, null, null
+            );
+            if (cursor.moveToFirst()) {
+                return;
+            } else {
+                for (int i = 1; i < 5; i++) {
+                    Exam exam = new Exam(0, "exam" + i,
+                            "some text describing the exam" + i, 0, 0);
+                    long examId = this.add(exam);
+                    for (int j = 1; j < 5; j++) {
+                        Question question = new Question(0, examId, j,
+                                "Some Question" + j + " for Exam" + examId, 0
                         );
-                        OptionStore.getStore(context).add(option);
+                        long questionId = QuestionStore.getStore(context).add(question);
+                        for (int r = 1; r < 5; r++) {
+                            int correct = 0;
+                            if (r == 1) {
+                                correct = 1;
+                            }
+                            Option option = new Option(0, questionId,
+                                    "Some variant" + r + " for question" + j, correct
+                            );
+                            OptionStore.getStore(context).add(option);
+                        }
                     }
                 }
             }
+        } finally {
+            cursor.close();
         }
     }
 

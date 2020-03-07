@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 
 public class ConfirmHintDialogFragment extends DialogFragment {
 
@@ -44,7 +45,7 @@ public class ConfirmHintDialogFragment extends DialogFragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            callback = (ConfirmHintDialogListener) context;
+            callback = (ConfirmHintDialogListener) getFragmentManager().findFragmentByTag("diarlog_tag");
         } catch (ClassCastException e) {
             throw new ClassCastException(String.format("%s must implement ConfirmHintDialogListener", context.toString()));
         }

@@ -46,34 +46,42 @@ public class QuestionStore implements SqlStore<Question> {
 
     public List<Question> getByExamId(long examId){
         List<Question> questions = new ArrayList<>();
-        Cursor cursor = db.query(
-                ExamDbSchema.QuestionTable.NAME,
-                null, "exam_id = "+examId, null,
-                null, null, null
-        );
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            questions.add(getQuestion(cursor));
-            cursor.moveToNext();
-        }
-        cursor.close();
+        Cursor cursor = null;
+       try {
+            cursor = db.query(
+                   ExamDbSchema.QuestionTable.NAME,
+                   null, "exam_id = "+examId, null,
+                   null, null, null
+           );
+           cursor.moveToFirst();
+           while (!cursor.isAfterLast()) {
+               questions.add(getQuestion(cursor));
+               cursor.moveToNext();
+           }
+       }finally {
+           cursor.close();
+       }
         return questions;
     }
 
     @Override
     public List<Question> getAll() {
         List<Question> questions = new ArrayList<>();
-        Cursor cursor = this.db.query(
-                ExamDbSchema.QuestionTable.NAME,
-                null, null, null,
-                null, null, null
-        );
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            questions.add(getQuestion(cursor));
-            cursor.moveToNext();
+        Cursor cursor = null;
+        try {
+             cursor = this.db.query(
+                    ExamDbSchema.QuestionTable.NAME,
+                    null, null, null,
+                    null, null, null
+            );
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                questions.add(getQuestion(cursor));
+                cursor.moveToNext();
+            }
+        }finally {
+            cursor.close();
         }
-        cursor.close();
         return questions;
     }
 

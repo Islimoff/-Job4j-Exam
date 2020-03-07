@@ -11,21 +11,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import ru.job4j.R;
 import ru.job4j.activities.ExamActivity;
 
 public class    HintFragment extends Fragment {
-
-    private final Map<Integer, String> answers = new HashMap<Integer, String>();
-
-    public HintFragment() {
-        this.answers.put(0, "Hint 1");
-        this.answers.put(1, "Hint 2");
-        this.answers.put(2, "Hint 3");
-    }
 
     @Nullable
     @Override
@@ -34,10 +23,10 @@ public class    HintFragment extends Fragment {
         final TextView question = view.findViewById(R.id.question);
         final TextView answer = view.findViewById(R.id.hint);
         Bundle arguments = getArguments();
-        int page = arguments.getInt(ExamActivity.HINT_FOR, 0);
-        String questionText = arguments.getString(ExamActivity.QUESTION);
+        int correctAnswer = arguments.getInt(ExamFragment.HINT_FOR, 0);
+        String questionText = arguments.getString(ExamFragment.QUESTION);
         question.setText(questionText);
-        answer.setText(this.answers.get(page));
+        answer.setText(correctAnswer);
         Button back = view.findViewById(R.id.back);
         back.setOnClickListener(this::backBtn);
         return view;
@@ -50,8 +39,8 @@ public class    HintFragment extends Fragment {
     public static HintFragment of(int index, String text) {
         HintFragment hint = new HintFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt(ExamActivity.HINT_FOR, index);
-        bundle.putString(ExamActivity.QUESTION, text);
+        bundle.putInt(ExamFragment.HINT_FOR, index);
+        bundle.putString(ExamFragment.QUESTION, text);
         hint.setArguments(bundle);
         return hint;
     }

@@ -35,60 +35,68 @@ public class OptionStore implements SqlStore<Option> {
 
     @Override
     public long update(Option option) {
-       return db.update(OptionTable.NAME, getContentValues(option),
+        return db.update(OptionTable.NAME, getContentValues(option),
                 "id = ?", new String[]{String.valueOf(option.getId())});
     }
 
     @Override
     public long delete(int id) {
-          return db.delete(OptionTable.NAME, "id = ?", new String[]{String.valueOf(id)});
+        return db.delete(OptionTable.NAME, "id = ?", new String[]{String.valueOf(id)});
     }
 
-    public List<Option> getByQuestionId(long questionId){
+    public List<Option> getByQuestionId(long questionId) {
         List<Option> options = new ArrayList<>();
-        Cursor cursor = this.db.query(
-                ExamDbSchema.OptionTable.NAME,
-                null, "question_id = "+questionId, null,
-                null, null, null
-        );
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            options.add(new Option(cursor.getInt(cursor.getColumnIndex(OptionTable.Cols.ID)),
-                    cursor.getLong(cursor.getColumnIndex(OptionTable.Cols.QUESTION_ID)),
-                    cursor.getString(cursor.getColumnIndex(OptionTable.Cols.TEXT)),
-                    cursor.getInt(cursor.getColumnIndex(OptionTable.Cols.CORRECT))));
-            cursor.moveToNext();
+        Cursor cursor = null;
+        try {
+             cursor = this.db.query(
+                    ExamDbSchema.OptionTable.NAME,
+                    null, "question_id = " + questionId, null,
+                    null, null, null
+            );
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                options.add(new Option(cursor.getInt(cursor.getColumnIndex(OptionTable.Cols.ID)),
+                        cursor.getLong(cursor.getColumnIndex(OptionTable.Cols.QUESTION_ID)),
+                        cursor.getString(cursor.getColumnIndex(OptionTable.Cols.TEXT)),
+                        cursor.getInt(cursor.getColumnIndex(OptionTable.Cols.CORRECT))));
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
         }
-        cursor.close();
         return options;
     }
 
     @Override
     public List<Option> getAll() {
         List<Option> options = new ArrayList<>();
-        Cursor cursor = this.db.query(
-                ExamDbSchema.OptionTable.NAME,
-                null, null, null,
-                null, null, null
-        );
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            options.add(new Option(cursor.getInt(cursor.getColumnIndex(OptionTable.Cols.ID)),
-                    cursor.getLong(cursor.getColumnIndex(OptionTable.Cols.QUESTION_ID)),
-                    cursor.getString(cursor.getColumnIndex(OptionTable.Cols.TEXT)),
-                    cursor.getInt(cursor.getColumnIndex(OptionTable.Cols.CORRECT))));
-            cursor.moveToNext();
+        Cursor cursor = null;
+        try {
+             cursor = this.db.query(
+                    ExamDbSchema.OptionTable.NAME,
+                    null, null, null,
+                    null, null, null
+            );
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                options.add(new Option(cursor.getInt(cursor.getColumnIndex(OptionTable.Cols.ID)),
+                        cursor.getLong(cursor.getColumnIndex(OptionTable.Cols.QUESTION_ID)),
+                        cursor.getString(cursor.getColumnIndex(OptionTable.Cols.TEXT)),
+                        cursor.getInt(cursor.getColumnIndex(OptionTable.Cols.CORRECT))));
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
         }
-        cursor.close();
         return options;
     }
 
     @Override
     public ContentValues getContentValues(Option option) {
         ContentValues values = new ContentValues();
-        values.put(OptionTable.Cols.QUESTION_ID,option.getQuestion_id());
-        values.put(OptionTable.Cols.CORRECT,option.getCorrect());
-        values.put(OptionTable.Cols.TEXT,option.getText());
+        values.put(OptionTable.Cols.QUESTION_ID, option.getQuestion_id());
+        values.put(OptionTable.Cols.CORRECT, option.getCorrect());
+        values.put(OptionTable.Cols.TEXT, option.getText());
         return values;
     }
 }

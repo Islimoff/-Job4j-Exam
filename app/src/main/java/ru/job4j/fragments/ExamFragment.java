@@ -13,23 +13,26 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import java.util.List;
 
 import ru.job4j.R;
+import ru.job4j.activities.HintActivity;
 import ru.job4j.activities.ResultActivity;
 import ru.job4j.data.ExamStore;
 import ru.job4j.data.OptionStore;
 import ru.job4j.data.QuestionStore;
-import ru.job4j.data.Store;
 import ru.job4j.models.Exam;
 import ru.job4j.models.Option;
 import ru.job4j.models.Question;
 
-public class ExamFragment extends Fragment {
+public class ExamFragment extends Fragment implements ConfirmHintDialogFragment.ConfirmHintDialogListener{
 
     public static final String CORRECTANSWERS = "correctAnswers";
+    public static final String HINT_FOR = "hint_for";
+    public static final String QUESTION = "question";
     private View view;
     private int position = 0;
     private List<Question> questions;
@@ -93,7 +96,6 @@ public class ExamFragment extends Fragment {
                 intent.putExtra(CORRECTANSWERS, calculateResults());
                 startActivity(intent);
             } else {
-                showAnswer();
                 position++;
                 fillForm();
             }
@@ -112,14 +114,8 @@ public class ExamFragment extends Fragment {
     }
 
     private void hintButton(View view) {
-    }
-
-    private void showAnswer() {
-        Toast.makeText(
-                getContext(), "Your answer is " + variants.getCheckedRadioButtonId()
-                        + ", correct is " + question.getAnswer(),
-                Toast.LENGTH_SHORT
-        ).show();
+        DialogFragment dialog = new ConfirmHintDialogFragment();
+        dialog.show(getFragmentManager(), "dialog_tag");
     }
 
     private void showWarning() {
@@ -139,7 +135,38 @@ public class ExamFragment extends Fragment {
         for (int i = 0; i != questions.size(); i++) {
             if (answers[i]) correctAnswers++;
         }
-        int result=(int)(correctAnswers / (float) questions.size() * 100);
         return (int)(correctAnswers / (float) questions.size() * 100);
+    }
+
+    private int getCorrectAnswer(){
+        int correctAnswer=0;
+        for (int i = 0; i != options.size(); i++) {
+            if (options.get(i).getCorrect()){
+                correctAnswer= i+1;
+            }
+        }
+        return correctAnswer;
+    }
+
+    public static ExamFragment of(int id){
+        ExamFragment examFragment = new ExamFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt(StartExamFragment.EXAM_ID, id);
+        examFragment.setArguments(bundle);
+        return examFragment;
+    }
+
+    @Override
+    public void onPositiveDialogClick(DialogFragment dialog) {
+        Intent intent = new Intent(getContext(), HintActivity.class);
+        TextView text = view.findViewById(R.id.question);
+        intent.putExtra(HINT_FOR, position);
+        intent.putExtra(QUESTION, text.getText().toString());
+        startActivity(intent);
+    }
+
+    @Override
+    public void onNegativeDialogClick(DialogFragment dialog) {
+        Toast.makeText(getContext(), "Молодец!!!", Toast.LENGTH_SHORT).show();
     }
 }
