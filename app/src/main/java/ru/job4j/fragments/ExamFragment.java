@@ -28,7 +28,7 @@ import ru.job4j.models.Exam;
 import ru.job4j.models.Option;
 import ru.job4j.models.Question;
 
-public class ExamFragment extends Fragment implements ConfirmHintDialogFragment.ConfirmHintDialogListener{
+public class ExamFragment extends Fragment {
 
     public static final String CORRECTANSWERS = "correctAnswers";
     public static final String HINT_FOR = "hint_for";
@@ -47,7 +47,7 @@ public class ExamFragment extends Fragment implements ConfirmHintDialogFragment.
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_exam, container, false);
         Bundle args = getArguments();
-        examId= args.getInt("id");
+        examId = args.getInt("id");
         questions = QuestionStore.getStore(getContext())
                 .getByExamId(examId);
         fillForm();
@@ -88,9 +88,9 @@ public class ExamFragment extends Fragment implements ConfirmHintDialogFragment.
         if (variants.getCheckedRadioButtonId() != -1) {
             checkAnswer();
             if (position == questions.size() - 1) {
-                int result=calculateResults();
-               Exam exam=ExamStore.getStore(getContext()).getById(examId);
-               exam.setResult(result);
+                int result = calculateResults();
+                Exam exam = ExamStore.getStore(getContext()).getById(examId);
+                exam.setResult(result);
                 ExamStore.getStore(getContext()).update(exam);
                 Intent intent = new Intent(getContext(), ResultActivity.class);
                 intent.putExtra(CORRECTANSWERS, calculateResults());
@@ -114,8 +114,10 @@ public class ExamFragment extends Fragment implements ConfirmHintDialogFragment.
     }
 
     private void hintButton(View view) {
-        DialogFragment dialog = new ConfirmHintDialogFragment();
-        dialog.show(getFragmentManager(), "dialog_tag");
+        Intent intent = new Intent(getContext(), HintActivity.class);
+        intent.putExtra(HINT_FOR, getCorrectAnswer());
+        intent.putExtra(QUESTION, String.valueOf(question.getText()));
+        startActivity(intent);
     }
 
     private void showWarning() {
@@ -135,38 +137,24 @@ public class ExamFragment extends Fragment implements ConfirmHintDialogFragment.
         for (int i = 0; i != questions.size(); i++) {
             if (answers[i]) correctAnswers++;
         }
-        return (int)(correctAnswers / (float) questions.size() * 100);
+        return (int) (correctAnswers / (float) questions.size() * 100);
     }
 
-    private int getCorrectAnswer(){
-        int correctAnswer=0;
+    private int getCorrectAnswer() {
+        int correctAnswer = 0;
         for (int i = 0; i != options.size(); i++) {
-            if (options.get(i).getCorrect()){
-                correctAnswer= i+1;
+            if (options.get(i).getCorrect()) {
+                correctAnswer = i + 1;
             }
         }
         return correctAnswer;
     }
 
-    public static ExamFragment of(int id){
+    public static ExamFragment of(int id) {
         ExamFragment examFragment = new ExamFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(StartExamFragment.EXAM_ID, id);
         examFragment.setArguments(bundle);
         return examFragment;
-    }
-
-    @Override
-    public void onPositiveDialogClick(DialogFragment dialog) {
-        Intent intent = new Intent(getContext(), HintActivity.class);
-        TextView text = view.findViewById(R.id.question);
-        intent.putExtra(HINT_FOR, position);
-        intent.putExtra(QUESTION, text.getText().toString());
-        startActivity(intent);
-    }
-
-    @Override
-    public void onNegativeDialogClick(DialogFragment dialog) {
-        Toast.makeText(getContext(), "Молодец!!!", Toast.LENGTH_SHORT).show();
     }
 }

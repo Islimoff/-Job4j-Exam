@@ -24,6 +24,8 @@
         </activity>
         <activity android:name=".activities.StartExamActivity">
         </activity>
+        <activity android:name=".activities.HintActivity">
+        </activity>
     </application>
 
 </manifest>

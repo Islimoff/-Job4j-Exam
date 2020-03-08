@@ -26,7 +26,7 @@ public class    HintFragment extends Fragment {
         int correctAnswer = arguments.getInt(ExamFragment.HINT_FOR, 0);
         String questionText = arguments.getString(ExamFragment.QUESTION);
         question.setText(questionText);
-        answer.setText(correctAnswer);
+        answer.setText(String.valueOf("The correct answer is: "+correctAnswer));
         Button back = view.findViewById(R.id.back);
         back.setOnClickListener(this::backBtn);
         return view;
