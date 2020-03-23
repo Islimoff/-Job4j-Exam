@@ -1,70 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/linearLayout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="3dp"
+    app:cardElevation="3dp"
+    app:cardUseCompatPadding="true">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_view"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_gravity="center"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        stile="@style/MyCardViewStyle"
-        app:cardCornerRadius="4dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/info"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:text="TextView"
-            android:textSize="24dp"
-            app:layout_constraintBaseline_toBaselineOf="@+id/result"
-            app:layout_constraintEnd_toStartOf="@+id/result"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/result"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="90%"
-            android:textSize="24dp"
-            app:layout_constraintEnd_toStartOf="@+id/date"
-            app:layout_constraintStart_toEndOf="@+id/info"
+            android:textColor="#000"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/result"
+            android:layout_width="53dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="90%"
+            android:textSize="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/info" />
+
+        <TextView
             android:id="@+id/date"
-            android:layout_width="0dp"
+            android:layout_width="162dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:text="12.07.2019"
             android:textSize="24dp"
-            app:layout_constraintBaseline_toBaselineOf="@+id/result"
-            app:layout_constraintEnd_toStartOf="@+id/edit"
-            app:layout_constraintStart_toEndOf="@+id/result" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/info" />
 
         <ImageView
             android:id="@+id/edit"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="46dp"
+            android:layout_height="28dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:src="@android:drawable/ic_menu_edit"
-            app:layout_constraintEnd_toStartOf="@+id/delete"
-            app:layout_constraintStart_toEndOf="@+id/date"
-            app:layout_constraintTop_toTopOf="@+id/date" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/date" />
 
         <ImageView
             android:id="@+id/delete"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="46dp"
+            android:layout_height="28dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             android:src="@android:drawable/ic_menu_delete"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/edit"
-            app:layout_constraintTop_toTopOf="@+id/edit" />
-
-    </androidx.cardview.widget.CardView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintTop_toBottomOf="@+id/result" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
