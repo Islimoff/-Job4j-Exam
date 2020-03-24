@@ -104,11 +104,8 @@ public class ExamListFragment extends Fragment {
             Exam exam = this.exams.get(i);
             TextView name = holder.view.findViewById(R.id.info);
             TextView result=holder.view.findViewById(R.id.result);
-            if ((i % 2) == 0) {
-                holder.view.setBackgroundColor(Color.parseColor("#d8d8d8"));
-            }
             name.setText(exam.getName());
-            result.setText(String.valueOf(exam.getResult())+"%");
+            result.setText(exam.getResult()+"%");
             holder.view.setOnClickListener(btn->
             {
                 FragmentManager fm = getFragmentManager();
