@@ -1,20 +1,13 @@
 # -Job4j-Exam
-This is my pet project as part of my mobile development course.
+This is my first pet project in Flutter.
 
--The app has the 4 screens.
+-The app has the 2 screens.
+When the user clicks the desired color, the app goes to the second screen with the selected background color. Then clicking on the screen, the color changes randomly
 
-- List of exams
+- List of Colors
 
-![ScreenShot](images/ListExams.png)
+![ScreenShot](images/ListColors.png)
 
-- Start Exam Activity
+- Random Color Screen
 
-![ScreenShot](images/StartExam.png)
-
-- Exam Activity
-
-![ScreenShot](images/Exam.png)
-
- - Exam Result
-
-![ScreenShot](images/Result.png)
+![ScreenShot](images/RandomColor.png)
